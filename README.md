@@ -10,10 +10,11 @@
 <br/>Toripuru-Toraiado is the Japanese pronucation.
 <br/>The game is held on a 3x3 board. Every card has number on each side.
 <br/>Player will be on Red Team while CPU will be on Blue Team.
-<br/>Players take turn to place cards on the board, one card at a time.
-<br/>When the sides of the card touch, the battle begins!
-<br/>Whoever's number is greater capture the other card.
-<br/>Win the game by having the most cards on the board at the end of the game!
+**PRESS START TO BEGIN!**
+1. Players take turn to place cards on the board, one card at a time.
+1. When the sides of the card touch, the battle begins!
+1. Whoever's number is greater capture the other card.
+1. Win the game by having the most cards on the board at the end of the game!
 
 ## -MVP Pitch
 A card game that combins the machanic of the board game Go and simple Math!
