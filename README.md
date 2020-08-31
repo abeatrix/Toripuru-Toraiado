@@ -10,7 +10,7 @@
 <br/>Toripuru-Toraiado is the Japanese pronucation.
 <br/>The game is held on a 3x3 board. Every card has number on each side.
 <br/>Player will be on Red Team while CPU will be on Blue Team.
-**PRESS START TO BEGIN!**
+<br/>**PRESS START TO BEGIN!**
 1. Players take turn to place cards on the board, one card at a time.
 1. When the sides of the card touch, the battle begins!
 1. Whoever's number is greater capture the other card.
@@ -18,6 +18,10 @@
 
 ## -MVP Pitch
 A card game that combins the machanic of the board game Go and simple Math!
+By deadline, the game will be:
+* playable with the card capture machanic
+* card positioning on the board
+* card will be captured by the one who has the greater number on the card on the size that touches
 
 ## -Instruction
 <br/><a href="https://www.pixiv.net/en/artworks/65060132"><img src="https://i.ibb.co/1MgQcc8/Frontof-Card.jpg" alt="Frontof-Card" border="0"></a>
