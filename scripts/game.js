@@ -112,14 +112,13 @@ class Card {
 
 class Player {
     constructor(name){
-      this.name = name;
+	  this.name = name;
+	  this.deck = [];
 	  this.hands = [];
 	  this.handsChoice = null;
       this.boardChoice = null; //position on board
-      this.score = 0;
-	  this.deck = [];
 	  this.choice = null;
-	  this.gameBoardChoice = null;
+	  this.onBoard = []; //cards positions on board
     }
 
     generateDeck(){
@@ -158,6 +157,7 @@ class Player {
 			if(gameBoard[i]==y){
 				gameBoard.splice(i,1);
 				this.choice = i;
+				this.onBoard.push(i);
 			}
 		}
 		$(`#PlayerCard${i}`).remove(); // remove card from Hands in front end
@@ -182,6 +182,7 @@ class Player {
 		for(let i in gameBoard){
 			if(gameBoard[i]==x){
 				gameBoard.splice(i,1);
+				this.onBoard.push(i);
 			}
 		}
 		this.hands.splice(aiRandom,1);
@@ -190,52 +191,118 @@ class Player {
 		player2.handsChoice = null;
 	}
 
-	compareCards(){ //compare cards
+	// compareCards(){ //compare cards with capture cards
+	// 	//if($(`#cardBoard${y} #topNum`).text() > 2){
+	// 	let p1 = player1.boardChoice;
+	// 	let p2 = player2.boardChoice;
+	// 	if(p1 != null && p2 != null){
+	// 		if(p1 == p2+3){ // see if p1 card is on top of p2 card
+	// 			if($(`#cardBoard${p1} #topNum`).text() > $(`#cardBoard${p2} #botNum`).text()){
+	// 				$(`#cardBoard${p2}`).removeClass(`CPUCard`);
+	// 				$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+	// 			} else {
+	// 				$(`#cardBoard${p1}`).removeClass(`PlayerCard`);
+	// 				$(`#cardBoard${p1}`).addClass(`CPUCard`);
+	// 			}
+	// 		} else if (p1 == p2-3){ // see if p1 card is below of p2 card
+	// 			if($(`#cardBoard${p1} #botNum`).text() > $(`#cardBoard${p2} #topNum`).text()){
+	// 				$(`#cardBoard${p2}`).removeClass(`CPUCard`);
+	// 				$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+	// 			} else {
+	// 				$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
+	// 				$(`#cardBoard${p1}`).addClass(`CPUCard`);
+	// 			}
+	// 		} else if (p1 == p2+1){// see if p1 card is one the right of p2 card
+	// 			if($(`#cardBoard${p1} #leftNum`).text() > $(`#cardBoard${p2} #rightNum`).text()){
+	// 				$(`#cardBoard${p2}`).removeClass(`CPUCard`)
+	// 				$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+	// 			} else {
+	// 				$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
+	// 				$(`#cardBoard${p1}`).addClass(`CPUCard`);
+	// 			}
+	// 		} else if (p1 == p2-1){// see if p1 card is on the left of p2 card
+	// 			if($(`#cardBoard${p1} #rightNum`).text() > $(`#cardBoard${p2} #leftNum`).text()){
+	// 				$(`#cardBoard${p2}`).removeClass(`CPUCard`)
+	// 				$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+	// 			} else {
+	// 				$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
+	// 				$(`#cardBoard${p1}`).addClass(`CPUCard`);
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	compareCards(){ //compare cards with capture cards
 		//if($(`#cardBoard${y} #topNum`).text() > 2){
-		let p1 = player1.boardChoice;
-		let p2 = player2.boardChoice;
-		if(p1 != null && p2 != null){
-			if(p1 == p2+3){ // see if p1 card is on top of p2 card
-				if($(`#cardBoard${p1} #topNum`).text() > $(`#cardBoard${p2} #botNum`).text()){
-					player1.score += 1;
-					$(`#cardBoard${p2}`).removeClass(`CPUCard`);
-					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
-				} else {
-					player2.score += 1;
-					$(`#cardBoard${p1}`).removeClass(`PlayerCard`);
-					$(`#cardBoard${p1}`).addClass(`CPUCard`);
-				}
-			} else if (p1 == p2-3){ // see if p1 card is below of p2 card
-				if($(`#cardBoard${p1} #botNum`).text() > $(`#cardBoard${p2} #topNum`).text()){
-					player1.score += 1;
-					$(`#cardBoard${p2}`).removeClass(`CPUCard`);
-					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
-				} else {
-					player2.score += 1;
-					$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
-					$(`#cardBoard${p1}`).addClass(`CPUCard`);
-				}
-			} else if (p1 == p2+1){// see if p1 card is one the right of p2 card
-				if($(`#cardBoard${p1} #leftNum`).text() > $(`#cardBoard${p2} #rightNum`).text()){
-					player1.score += 1;
-					$(`#cardBoard${p2}`).removeClass(`CPUCard`)
-					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
-				} else {
-					player2.score += 1;
-					$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
-					$(`#cardBoard${p1}`).addClass(`CPUCard`);
-				}
-			} else if (p1 == p2-1){// see if p1 card is on the left of p2 card
-				if($(`#cardBoard${p1} #rightNum`).text() > $(`#cardBoard${p2} #leftNum`).text()){
-					player1.score += 1;
-					$(`#cardBoard${p2}`).removeClass(`CPUCard`)
-					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
-				} else {
-					player2.score += 1;
-					$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
-					$(`#cardBoard${p1}`).addClass(`CPUCard`);
+		let p1 = player1.onBoard;
+		let p2 = player2.onBoard;
+		let p1Temp = [];
+		let p2Temp = [];
+		if(player1.onBoard.length >0 && player2.onBoard.length >0){
+			console.log(`testing`)
+			for(let i in p1){
+				for(let j in p2){
+					if(parseInt(p1[i]) == (parseInt(p2[j])+3) ){ // see if p1 card is on top of p2 card
+						if($(`#cardBoard${parseInt(p1[i])} #topNum`).text() > $(`#cardBoard${parseInt(p2[j])} #botNum`).text()){
+							$(`#cardBoard${(parseInt(p2[j]))}`).removeClass(`CPUCard`);
+							$(`#cardBoard${(parseInt(p2[j]))}`).addClass(`PlayerCard`);
+							p1Temp.push(p2[j]);
+							p2.splice((parseInt(p2[j])),1);
+						} else {
+							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`);
+							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
+							p2Temp.push(p1[i]);
+							p1.splice(parseInt(p1[i]),1);
+						}
+					} else if(parseInt(p1[i]) == (parseInt(p2[j])-3)){ // see if p1 card is below of p2 card
+						if($(`#cardBoard${parseInt(p1[i])} #botNum`).text() > $(`#cardBoard${parseInt(p2[j])} #topNum`).text()){
+							$(`#cardBoard${(parseInt(p2[j]))}`).removeClass(`CPUCard`);
+							$(`#cardBoard${(parseInt(p2[j]))}`).addClass(`PlayerCard`);
+							p1Temp.push(p2[j]);
+							p2.splice((parseInt(p2[j])),1);
+						} else {
+							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`)
+							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
+							p2Temp.push(p1[i]);
+							p1.splice(parseInt(p1[i]),1);
+						}
+					} else if(parseInt(p1[i]) == (parseInt(p2[j])+1)){// see if p1 card is one the right of p2 card
+						if($(`#cardBoard${parseInt(p1[i])} #leftNum`).text() > $(`#cardBoard${parseInt(p2[j])} #rightNum`).text()){
+							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
+							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
+							p1Temp.push(p2[j]);
+							p2.splice((parseInt(p2[j])),1);
+						} else {
+							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`)
+							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
+							p2Temp.push(p1[i]);
+							p1.splice(parseInt(p1[i]),1);
+						}
+					} else if(parseInt(p1[i]) == (parseInt(p2[j])-1)){// see if p1 card is on the left of p2 card
+						if($(`#cardBoard${parseInt(p1[i])} #rightNum`).text() > $(`#cardBoard${parseInt(p2[j])} #leftNum`).text()){
+							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
+							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
+							p1Temp.push(p2[j]);
+							p2.splice((parseInt(p2[j])),1);
+						} else {
+							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`)
+							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
+							p2Temp.push(p1[i]);
+							p1.splice(parseInt(p1[i]),1);
+						}
+					}
 				}
 			}
+		}
+		if(p1Temp.length > 0){ // add whats in the temporary array to the actual one after cards capturing has been completed.
+			for(let i in p1Temp){
+				player1.onBoard.push(p1Temp[i]);
+			} p1Temp = [];
+		}
+		if(p2Temp.length > 0){ // add whats in the temporary array to the actual one after cards capturing has been completed.
+			for(let i in p2Temp){
+				player2.onBoard.push(p2Temp[i]);
+			}  p2Temp = [];
 		}
 	}
 
@@ -318,6 +385,7 @@ $("#startbutton").on("click", function(){
   console.log(`===Game Start===`);
   let game = new Game('player1', 'player2');
   game.gameStart();
+  $("#startbutton").remove();
 });
 
 
