@@ -1,4 +1,4 @@
-var allCards= [
+let allCards= [
 	{	name: 'Card 1',
 		top: 3,
 		right: 3,
