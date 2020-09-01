@@ -96,6 +96,7 @@ var allCards= [
 // Game Board Position
 let gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
+
 // Classes //
 class Card {
     constructor(name, top, right, bottom, left, img){
@@ -118,6 +119,7 @@ class Player {
       this.score = 0;
 	  this.deck = [];
 	  this.choice = null;
+	  this.gameBoardChoice = null;
     }
 
     generateDeck(){
@@ -132,7 +134,7 @@ class Player {
 		while(this.hands.length < 5){
 			this.hands.push(this.deck[0]);
 			this.deck.splice(0,1);
-			console.log(`${this.deck[0].name} has been added to ${this.name} hands!`);
+			//console.log(`${this.deck[0].name} has been added to ${this.name} hands!`);
 		};
 		for(let i in this.hands){
 			$(`#${this.name}Card${i} #topNum`).text(`${this.hands[i].top}`);
@@ -145,6 +147,7 @@ class Player {
 	playaCard(){ //change color on board when player placed card
 		let i = this.handsChoice; // where user click from hands
 		let y = parseInt(this.boardChoice);
+		this.boardChoice = y;
 		let z = this.hands[i];
 		$(`#cardBoard${y}`).addClass(`${this.name}Card`);
 		$(`#cardBoard${y} #topNum`).text(`${z.top}`);
@@ -158,8 +161,7 @@ class Player {
 			}
 		}
 		$(`#PlayerCard${i}`).remove(); // remove card from Hands in front end
-		this.boardChoice = null;
-		this.handsChoice = null;
+		this.compareCards();
 		player2.aiPicks();
 	}
 
@@ -167,9 +169,10 @@ class Player {
 	aiPicks(){ // Card pick by CPU
 		//let x = parseInt(player1.boardChoice)+1; // need to find its position on gameboard
 		let x = gameBoard[Math.floor(Math.random() *gameBoard.length)];
+		this.boardChoice = x;
 		const aiRandom = Math.floor(Math.random() *this.hands.length);
-		console.log(`AI picked ${this.hands[aiRandom].name} to place in ${x}`);
 		this.handsChoice = this.hands[aiRandom].name;
+		$(`#CPUCard${aiRandom}`).remove();
 		$(`#cardBoard${x}`).addClass(`${this.name}Card`);
 		$(`#cardBoard${x} #topNum`).text(`${this.hands[aiRandom].top}`);
 		$(`#cardBoard${x} #leftNum`).text(`${this.hands[aiRandom].left}`);
@@ -181,9 +184,59 @@ class Player {
 				gameBoard.splice(i,1);
 			}
 		}
-		$(`#CPUCard${aiRandom}`).remove();
 		this.hands.splice(aiRandom,1);
-		console.log(gameBoard);
+		this.compareCards();
+		player1.handsChoice = null;
+		player2.handsChoice = null;
+	}
+
+	compareCards(){ //compare cards
+		//if($(`#cardBoard${y} #topNum`).text() > 2){
+		let p1 = player1.boardChoice;
+		let p2 = player2.boardChoice;
+		if(p1 != null && p2 != null){
+			if(p1 == p2+3){ // see if p1 card is on top of p2 card
+				if($(`#cardBoard${p1} #topNum`).text() > $(`#cardBoard${p2} #botNum`).text()){
+					player1.score += 1;
+					$(`#cardBoard${p2}`).removeClass(`CPUCard`);
+					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+				} else {
+					player2.score += 1;
+					$(`#cardBoard${p1}`).removeClass(`PlayerCard`);
+					$(`#cardBoard${p1}`).addClass(`CPUCard`);
+				}
+			} else if (p1 == p2-3){ // see if p1 card is below of p2 card
+				if($(`#cardBoard${p1} #botNum`).text() > $(`#cardBoard${p2} #topNum`).text()){
+					player1.score += 1;
+					$(`#cardBoard${p2}`).removeClass(`CPUCard`);
+					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+				} else {
+					player2.score += 1;
+					$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
+					$(`#cardBoard${p1}`).addClass(`CPUCard`);
+				}
+			} else if (p1 == p2+1){// see if p1 card is one the right of p2 card
+				if($(`#cardBoard${p1} #leftNum`).text() > $(`#cardBoard${p2} #rightNum`).text()){
+					player1.score += 1;
+					$(`#cardBoard${p2}`).removeClass(`CPUCard`)
+					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+				} else {
+					player2.score += 1;
+					$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
+					$(`#cardBoard${p1}`).addClass(`CPUCard`);
+				}
+			} else if (p1 == p2-1){// see if p1 card is on the left of p2 card
+				if($(`#cardBoard${p1} #rightNum`).text() > $(`#cardBoard${p2} #leftNum`).text()){
+					player1.score += 1;
+					$(`#cardBoard${p2}`).removeClass(`CPUCard`)
+					$(`#cardBoard${p2}`).addClass(`PlayerCard`);
+				} else {
+					player2.score += 1;
+					$(`#cardBoard${p1}`).removeClass(`PlayerCard`)
+					$(`#cardBoard${p1}`).addClass(`CPUCard`);
+				}
+			}
+		}
 	}
 
 	cardCapture(){
@@ -197,7 +250,6 @@ class Game {
       this.round = 1;                     // round counter
       this.player1 = player1;             // player 1 register
       this.player2 = player2;            // player 2 register
-      this.cardsOnBoard = [];
     }
 
     gameStart(){
@@ -205,17 +257,11 @@ class Game {
 		player1.drawCard();
 		player2.drawCard();
 		this.clickBoardRegister();
-		this.clickHandsRegister();
-	}
-
-	compareCards(redCard, blueCard){
-		if(redCard>blueCard){
-			player1.cardCapture();
-		} else if(redCard === blueCard){
-			console.log(`it's a tie`)
-		} else {
-			player2.cardCapture();
-		}
+		// while(gameBoard.length>0){
+		// 	this.clickBoardRegister();
+		// 	this.clickHandsRegister();
+		// }
+		//this.gameOver();
 	}
 
 	clickBoardRegister(){ // create cilck function for every tite on board
@@ -224,31 +270,37 @@ class Game {
 				player1.boardChoice = i;
 				console.log(`Player picked card to place in ${player1.boardChoice}`)
 				$(`.gameBoard #cardBoard${i}`).unbind();
-				this.clickHandsRegister();
+				//this.clickHandsRegister();
+				for(let i in player1.hands){
+					$(`.playerHands #PlayerCard${i}`).on("click", function(){
+						player1.handsChoice = i;
+						// console.log(`Player picked card to place in ${player1.boardChoice}`)
+						// console.log(`Player picked card ${player1.handsChoice} from hands`)
+						player1.playaCard()
+					})
+				}
 			})
 		}
 	}
 
-	clickHandsRegister(){ // create cilck function for every card on hands
-		for(let i in player1.hands){
-			$(`.playerHands #PlayerCard${i}`).on("click", function(){
-				player1.handsChoice = i;
-				// console.log(`Player picked card to place in ${player1.boardChoice}`)
-				// console.log(`Player picked card ${player1.handsChoice} from hands`)
-				player1.playaCard()
-			})
-		}
-	}
+	// clickHandsRegister(){ // create cilck function for every card on hands
+	// 	for(let i in player1.hands){
+	// 		$(`.playerHands #PlayerCard${i}`).on("click", function(){
+	// 			player1.handsChoice = i;
+	// 			// console.log(`Player picked card to place in ${player1.boardChoice}`)
+	// 			// console.log(`Player picked card ${player1.handsChoice} from hands`)
+	// 			player1.playaCard()
+	// 		})
+	// 	}
+	// }
 
 	gameOver(){
-		if(gameBoard.length === 0){
-			if(player1.score>player2.score){
-				alert(`Player won!`)
-			} else if (player1.score == player2.score){
-				alert(`it was a tie!`)
-			} else {
-				alert(`CPU won!`)
-			}
+		if(player1.score>player2.score){
+			alert(`Player won!`)
+		} else if (player1.score == player2.score){
+			alert(`it was a tie!`)
+		} else {
+			alert(`CPU won!`)
 		}
 	}
 
