@@ -244,51 +244,51 @@ class Player {
 				for(let j in p2){
 					if(parseInt(p1[i]) == (parseInt(p2[j])+3) ){ // see if p1 card is on top of p2 card
 						if($(`#cardBoard${parseInt(p1[i])} #topNum`).text() > $(`#cardBoard${parseInt(p2[j])} #botNum`).text()){
-							$(`#cardBoard${(parseInt(p2[j]))}`).removeClass(`CPUCard`);
-							$(`#cardBoard${(parseInt(p2[j]))}`).addClass(`PlayerCard`);
+							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`);
+							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
 							p1Temp.push(p2[j]);
-							p2.splice((parseInt(p2[j])),1);
+							p2.splice(j,1);
 						} else {
 							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`);
 							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[i]);
-							p1.splice(parseInt(p1[i]),1);
+							p1.splice(i,1);
 						}
 					} else if(parseInt(p1[i]) == (parseInt(p2[j])-3)){ // see if p1 card is below of p2 card
 						if($(`#cardBoard${parseInt(p1[i])} #botNum`).text() > $(`#cardBoard${parseInt(p2[j])} #topNum`).text()){
-							$(`#cardBoard${(parseInt(p2[j]))}`).removeClass(`CPUCard`);
-							$(`#cardBoard${(parseInt(p2[j]))}`).addClass(`PlayerCard`);
+							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`);
+							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
 							p1Temp.push(p2[j]);
-							p2.splice((parseInt(p2[j])),1);
+							p2.splice(j,1);
 						} else {
 							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[i]);
-							p1.splice(parseInt(p1[i]),1);
+							p1.splice(i,1);
 						}
-					} else if(parseInt(p1[i]) == (parseInt(p2[j])+1)){// see if p1 card is one the right of p2 card
+					} else if(parseInt(p1[i]) == (parseInt(p2[j])+1) && parseInt(p1[i]) % 3 !=2){// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${parseInt(p1[i])} #leftNum`).text() > $(`#cardBoard${parseInt(p2[j])} #rightNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
 							p1Temp.push(p2[j]);
-							p2.splice((parseInt(p2[j])),1);
+							p2.splice(j,1);
 						} else {
 							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[i]);
-							p1.splice(parseInt(p1[i]),1);
+							p1.splice(i,1);
 						}
-					} else if(parseInt(p1[i]) == (parseInt(p2[j])-1)){// see if p1 card is on the left of p2 card
+					} else if(parseInt(p1[i]) == (parseInt(p2[j])-1 && parseInt(p1[i]) % 3 !=0)){// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${parseInt(p1[i])} #rightNum`).text() > $(`#cardBoard${parseInt(p2[j])} #leftNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
 							p1Temp.push(p2[j]);
-							p2.splice((parseInt(p2[j])),1);
+							p2.splice(j,1);
 						} else {
 							$(`#cardBoard${parseInt(p1[i])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[i])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[i]);
-							p1.splice(parseInt(p1[i]),1);
+							p1.splice(i,1);
 						}
 					}
 				}
