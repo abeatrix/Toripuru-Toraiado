@@ -1,6 +1,6 @@
 <a href="https://www.pixiv.net/en/artworks/83941944"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a><br/>
 # -Toripuru-Toraiado
-<br/>A tribute to the mini game from FF14 Triple Triad built in Javascrip.
+<br/>A tribute to the mini game from FF14 Triple Triad built in pure CSS and Javascrip with no images.
 
 ## -Wire frames
 <br/><a href="https://ibb.co/99V2J4d"><img src="https://i.ibb.co/nsnfT1K/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a>
@@ -39,3 +39,6 @@ By deadline, the game will be:
 ## -Credit
 <br/><b>Back of the card design is from 隔断 on pixiv:</b>
 <br/><b>Instruction Art is from 萩酢 on pixiv:</b>
+
+## -Updates
+9/1/2020  Base game completed. Will add more rules and cards to the game in the next few days. Would like to add visual effect in the near future.
