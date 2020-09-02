@@ -39,3 +39,6 @@ By deadline, the game will be:
 ## -Credit
 <br/><b>Back of the card design is from 隔断 on pixiv:</b>
 <br/><b>Instruction Art is from 萩酢 on pixiv:</b>
+
+## -Updates
+9/1/2020  Base game completed. Will add more rules and cards to the game in the next few days. Would like to add visual effect in the near future.
