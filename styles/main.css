@@ -9,6 +9,7 @@ body {
     background: #fff;
     text-align: center;
     font-family: 'Abel', sans-serif;
+    min-width: 1500px;
   }
 
 h1 {
@@ -91,7 +92,7 @@ h1 {
     color: grey;
 }
 
-#playerHands {
+.playerHands {
     background-color: #dff0e3;
     color: grey;
     margin-top: 10px;

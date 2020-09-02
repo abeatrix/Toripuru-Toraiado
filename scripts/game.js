@@ -18,30 +18,30 @@ class Player {
     constructor(name){
 	  this.name = name;
 	  this.deck = [];
-	  this.hands = [];
-	  this.handsCounter = [];
-	  this.handsChoice = null;																		// the card from hand that the player has CLICKED
-      this.boardChoice = null; 																		// the position on board that the player has CLICKED
-	  this.choice = null; 																			// the index of the card that the player currently selected
-	  this.onBoard = []; 																			// player's cards' positions on board
-	  this.readyCheck = 0; 																			// ready check
-	  this.compareCheck = 0;																		// check if the cards have been compared this round
+	  this.hands = [];																					// cards the players start with
+	  this.handsCounter = [];																			// keep track of the cards left in hands
+	  this.handsChoice = null;																			// the card from hand that the player has CLICKED
+      this.boardChoice = null; 																			// the position on board that the player has CLICKED
+	  this.choice = null; 																				// the index of the card that the player currently selected
+	  this.onBoard = []; 																				// player's cards' positions on board
+	  this.readyCheck = 0; 																				// ready check
+	  this.compareCheck = 0;																			// check if the cards have been compared this round
     }
 
     generateDeck(){
         allCards.forEach((playcard) => {
         const card = new Card(playcard.name, playcard.top, playcard.right, playcard.bottom, playcard.left, playcard.img);
-		this.deck.push(card); 																	// add newly created cards to deck
+		this.deck.push(card); 																			// add newly created cards to deck
 		});
-		this.deck.sort(() => Math.random() - 0.5); 												//shuffle deck before players draw from them to make sure that they will always be different
+		this.deck.sort(() => Math.random() - 0.5); 														//shuffle deck before players draw from them to make sure that they will always be different
 	}
 
-	drawCard() { 																					// draw card until cards in hands reach 5
+	drawCard() { 																						// draw card until cards in hands reach 5
 		while(this.hands.length < 5){
 			this.hands.push(this.deck[0]);
 			this.deck.splice(0,1);
 		};
-		for(let i in this.hands){																// add cards to hands in front-end
+		for(let i in this.hands){																		// add cards to hands in front-end
 			$(`#${this.name}Card${i} #topNum`).text(`${this.hands[i].top}`);
 			$(`#${this.name}Card${i} #leftNum`).text(`${this.hands[i].left}`);
 			$(`#${this.name}Card${i} #botNum`).text(`${this.hands[i].bottom}`);
@@ -49,29 +49,29 @@ class Player {
 		};
 	}
 
-	playaCard(){ 																					// When user click on the board then card in hard, the card will show up on their board, and remove it from their hands
+	playaCard(){ 																						// When user click on the board then card in hard, the card will show up on their board, and remove it from their hands
 		if(this.readyCheck == 0 && this.compareCheck == 0){
 			if(this.handsChoice != null){
-				let i = parseInt(this.handsChoice); 															// where user click from hands
-				let y = parseInt(this.boardChoice); 												// the position of the board the user selected
-				this.boardChoice = y;																// add the user choice to the variable boardChoice for compareCard function
-				let z = this.hands[i]; 																// this is the card that the player picked from their hands
+				let i = parseInt(this.handsChoice); 													// where user click from hands
+				let y = parseInt(this.boardChoice); 													// the position of the board the user selected
+				this.boardChoice = y;																	// add the user choice to the variable boardChoice for compareCard function
+				let z = this.hands[i]; 																	// this is the card that the player picked from their hands
 				$(`#cardBoard${y}`).addClass(`${this.name}Card`);
 				$(`#cardBoard${y} #topNum`).text(`${z.top}`);
 				$(`#cardBoard${y} #leftNum`).text(`${z.left}`);
 				$(`#cardBoard${y} #botNum`).text(`${z.bottom}`);
 				$(`#cardBoard${y} #rightNum`).text(`${z.right}`);
-				$(`#cardBoard${y}`).unbind();														// make selected tile not clickable anymore
+				$(`#cardBoard${y}`).unbind();															// make selected tile not clickable anymore
 				if(this.boardChoice!=null){
-					for(let i in gameBoard){														// to locate where the card player placed in gameBoard
+					for(let i in gameBoard){															// to locate where the card player placed in gameBoard
 						if(gameBoard[i]==y){
-							gameBoard.splice(i,1);													// remove position from gameBoard
-							this.choice = i; 														// the index of the card that the player currently selected
+							gameBoard.splice(i,1);														// remove position from gameBoard
+							this.choice = i; 															// the index of the card that the player currently selected
+							$(`#PlayerCard${parseInt(this.handsChoice)}`).remove(); 					// remove card from Hands in front-end
 						}
 					}
 					console.log(`checking pushing problem`);
-					this.onBoard.push(this.boardChoice); 											// add card to the array that store what cards players have on board
-					$(`#PlayerCard${i}`).remove(); 													// remove card from Hands in front-end
+					this.onBoard.push(this.boardChoice); 												// add card to the array that store what cards players have on board
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
 					this.compareCardsPlayer();
@@ -108,7 +108,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (parseInt(p2[j])-3)){ 														// see if p1 card is below of p2 card
+					} else if(x == (parseInt(p2[j])-3)){ 																	// see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${parseInt(p2[j])} #topNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`);
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -120,7 +120,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (parseInt(p2[j])+1) && (x % 3 !=0)){							// see if p1 card is one the right of p2 card
+					} else if(x == (parseInt(p2[j])+1) && (x % 3 !=0)){														// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p2[j])} #rightNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -132,7 +132,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p2[j]-1) && (x % 3 !=2)){										// see if p1 card is on the left of p2 card
+					} else if(x == parseInt(p2[j]-1) && (x % 3 !=2)){														// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p2[j])} #leftNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -309,11 +309,11 @@ class Player {
 
 	gameOver(){
 		if(player1.onBoard.length>player2.onBoard.length){
-			alert(`Player won!`)
+			alert(`Player won! Refresh Browser to play again!`)
 		} else if (player1.onBoard.length == player2.onBoard.length){
-			alert(`it was a tie!`)
+			alert(`it was a tie! Refresh Browser to play again!`)
 		} else {
-			alert(`CPU won!`)
+			alert(`CPU won! Refresh Browser to play again!`)
 		}
 	}
 
@@ -325,36 +325,6 @@ class Game {
 	  this.player2 = player2;
 	  this.totalBoard = 0;           																						// register player 2
     }
-
-    // gameStart(){
-	// 	console.log(`Welcome ${player1.name} and ${player2.name}!!`);
-	// 	player1.drawCard();
-	// 	player2.drawCard();
-	// 	if(gameBoard.length > 0){
-	// 		if(player1.handsChoice == null){
-	// 			this.clickBoardRegister();
-	// 			this.clickHandsRegister();
-	// 		}
-	// 		player1.playaCard();
-	// 	}
-	// 	if(gameBoard.length<=0){
-	// 		this.gameOver();
-	// 	}
-	// }
-
-	// gameStart(){
-	// 	console.log(`Welcome ${player1.name} and ${player2.name}!!`);
-	// 	player1.drawCard();
-	// 	player2.drawCard();
-	// 	if(gameBoard.length > 0){
-	// 		this.clickBoardRegister();
-	// 		this.clickHandsRegister();
-	// 	}
-	// 	else if(gameBoard.length = 0){
-	// 		this.gameOver();
-	// 		console.log(`gameStart check point 2`);
-	// 	}
-	// }
 
 	gameStart(){
 		console.log(`Welcome ${player1.name} and ${player2.name}!!`);
@@ -394,16 +364,6 @@ class Game {
 			})
 		}
 	}
-
-	// gameOver(){
-	// 	if(player1.onBoard.length>player2.onBoard.length){
-	// 		alert(`Player won!`)
-	// 	} else if (player1.onBoard.length == player2.onBoard.length){
-	// 		alert(`it was a tie!`)
-	// 	} else {
-	// 		alert(`CPU won!`)
-	// 	}
-	// }
 
 }
 
