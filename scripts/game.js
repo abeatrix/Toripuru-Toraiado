@@ -51,18 +51,12 @@ class Player {
 	}
 
 	playaCard(){ 																					// When user click on the board then card in hard, the card will show up on their board, and remove it from their hands
-		console.log(`Player play Card Check Point 1`);
 		if(this.readyCheck == 0 && this.compareCheck == 0){
-			console.log(`Player play Card Check Point 2`);
-			console.log(player1.handsChoice);
-			console.log(`click board choice check 2 - ${player1.boardChoice}`);
 			if(this.handsChoice != null){
 				let i = parseInt(this.handsChoice); 															// where user click from hands
 				let y = parseInt(this.boardChoice); 												// the position of the board the user selected
 				this.boardChoice = y;																// add the user choice to the variable boardChoice for compareCard function
 				let z = this.hands[i]; 																// this is the card that the player picked from their hands
-				console.log(`Player play Card Check Point 3`);
-				console.log(z);
 				$(`#cardBoard${y}`).addClass(`${this.name}Card`);
 				$(`#cardBoard${y} #topNum`).text(`${z.top}`);
 				$(`#cardBoard${y} #leftNum`).text(`${z.left}`);
@@ -74,19 +68,16 @@ class Player {
 						if(gameBoard[i]==y){
 							gameBoard.splice(i,1);													// remove position from gameBoard
 							this.choice = i; 														// the index of the card that the player currently selected
-							console.log(`playaCard check point 4`)
 						}
 					}
 					console.log(`checking pushing problem`);
-					this.onBoard.push(this.boardChoice); 												// add card to the array that store what cards players have on board
+					this.onBoard.push(this.boardChoice); 											// add card to the array that store what cards players have on board
 					$(`#PlayerCard${i}`).remove(); 													// remove card from Hands in front-end
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
 					this.compareCardsPlayer();
-					console.log(`playaCard check point 5`)
 					if(this.compareCheck == 1){
 						this.readyCheck = 1;
-						console.log(`playaCard check point 6`)
 					}
 				}
 			}
@@ -96,7 +87,6 @@ class Player {
 
 	compareCardsPlayer(){ 																									//compare cards at player's turn + capture cards
 		let x = this.boardChoice;
-		console.log(`click board choice check in compare 1 ${player1.boardChoice}`);
 		let p1 = player1.onBoard;
 		let p2 = player2.onBoard;
 		let p1Temp = [];
@@ -169,50 +159,53 @@ class Player {
 		if(this.compareCheck == 1){
 			if(p1Temp.length > 0){ 																								// add whats in the temporary array to the actual one after cards capturing has been completed.
 				player1.onBoard.push(p1Temp[0]);
-				console.log(`compare check onboad Push check`)
-				console.log(p1Temp[0])
-				console.log(p1)
-				console.log(p1Temp)
-				console.log(`compare check point 3`)
 			}
 			p1Temp = [];
 		}
-		console.log(`compare check point 4`);
 	}
 
 
 	aiPicks(){ 																						// Function to let CPU pick a card randomly, and place it on the board randomly
 		console.log(`AICard check point 1`)
 		if(player1.readyCheck == 1 && player1.compareCheck == 1 && gameBoard.length!=0){
+			if(this.hands.length === 5){
+				this.deck = this.hands;
+			}
 			let x = gameBoard[Math.floor(Math.random() *gameBoard.length)]; 						// computer randomly find a position on gameboard to place their cards
-			console.log(`AI picked ${x} to play on board ==========`)
 			this.boardChoice = x; 																	// add the CPU choice to the variable boardChoice for compareCard function
-			const aiRandom = Math.floor(Math.random() *this.hands.length);
-			this.handsChoice = this.hands[aiRandom].name;
-			console.log(`AICard check point 2`)
-			$(`#CPUCard${aiRandom}`).remove();													// remove card from hands in front-end
+			const aiRandom = this.deck[Math.floor(Math.random() *this.deck.length)];				// computer randomly find a number for the index in hands to play
+			for(let i in this.hands){
+				if(this.hands[i].name === aiRandom.name){
+					this.choice = i;
+					console.log(`AICard check point 5========= what is i = ${i}`)
+				}
+			}
+			for(let i in this.deck){
+				if(this.deck[i].name === aiRandom.name){
+					this.deck.splice(i, 1);
+				}
+			}
 			$(`#cardBoard${x}`).addClass(`${this.name}Card`);									// add selected card from hands to board
-			$(`#cardBoard${x} #topNum`).text(`${this.hands[aiRandom].top}`);
-			$(`#cardBoard${x} #leftNum`).text(`${this.hands[aiRandom].left}`);
-			$(`#cardBoard${x} #botNum`).text(`${this.hands[aiRandom].bottom}`);
-			$(`#cardBoard${x} #rightNum`).text(`${this.hands[aiRandom].right}`);
+			$(`#cardBoard${x} #topNum`).text(`${aiRandom.top}`);
+			$(`#cardBoard${x} #leftNum`).text(`${aiRandom.left}`);
+			$(`#cardBoard${x} #botNum`).text(`${aiRandom.bottom}`);
+			$(`#cardBoard${x} #rightNum`).text(`${aiRandom.right}`);
 			$(`#cardBoard${x}`).unbind();															// make selected tile not clickable anymore
 			this.onBoard.push(x); 																	// add card to the array that store what cards players have on board
 			for(let i in gameBoard){
 				if(gameBoard[i] == x){
-					console.log(`AI found gameboard ${i} and x is ${x}`)
 					gameBoard.splice(i,1);														// remove position from gameBoard
-					this.hands.splice(aiRandom, 1);
 					this.readyCheck = 1;
-					console.log(`AICard check point 3`)
 				}
 			}
+			$(`#CPUCard${this.choice}`).remove();															// remove card on front end
+			console.log(`AICard check point 7========= ${this.choice}`)
 			if(player2.readyCheck == 1 && player1.readyCheck == 1){
-				console.log(`AICard check point 4`)
+				console.log(`AICard check point 8`)
 				this.compareCardsAI();
 				if(this.compareCheck == 1){
 					this.resetRound();
-					console.log(`AICard check point 5`)
+					console.log(`AICard check point 9`)
 				}
 			}
 		} else if (gameBoard.length == 0){
