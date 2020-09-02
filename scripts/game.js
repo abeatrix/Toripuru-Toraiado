@@ -15,7 +15,7 @@ class Card {
 }
 
 class Player {
-    constructor(name, deck){
+    constructor(name){
 	  this.name = name;
 	  this.deck = [];
 	  this.hands = [];																											// cards the players start with
@@ -74,7 +74,7 @@ class Player {
 					this.onBoard.push(this.boardChoice); 																		// add card to the array that store what cards players have on board
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
-					this.compareCardsPlayer();
+					this.compareCards(player2);
 					if(this.compareCheck == 1){
 						this.readyCheck = 1;
 					}
@@ -86,86 +86,6 @@ class Player {
 		}
 		player2.aiPicks();
 	}
-
-	compareCardsPlayer(){ 																										//compare cards at player's turn + capture cards
-		let x = this.boardChoice;
-		let p1 = player1.onBoard;
-		let p2 = player2.onBoard;
-		let p1Temp = [];
-		console.log(`compare check point 1`);
-		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0){
-			if(p1.length >0 && p2.length >0){
-				for(let j in p2){
-					if(x == (parseInt(p2[j])+3) ){ 																				// see if current picked card is on top of p2 card
-						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${parseInt(p2[j])} #botNum`).text()){
-							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`);
-							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
-							p1Temp.push(p2[j]);
-							p2.splice(j,1);
-							console.log(`does this work 1`);
-							this.compareCheck = 1;
-						} else {
-							this.compareCheck = 1;
-							console.log(`there is no match`);
-						}
-					} else if(x == (parseInt(p2[j])-3)){ 																		// see if p1 card is below of p2 card
-						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${parseInt(p2[j])} #topNum`).text()){
-							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`);
-							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
-							p1Temp.push(p2[j]);
-							p2.splice(j,1);
-							this.compareCheck = 1;
-							console.log(`does this work 2`);
-						} else {
-							this.compareCheck = 1;
-							console.log(`there is no match`);
-						}
-					} else if(x == (parseInt(p2[j])+1) && (x % 3 !=0)){															// see if p1 card is one the right of p2 card
-						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p2[j])} #rightNum`).text()){
-							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
-							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
-							p1Temp.push(p2[j]);
-							p2.splice(j,1);
-							this.compareCheck = 1;
-							console.log(`does this work 3`);
-						} else {
-							this.compareCheck = 1;
-							console.log(`there is no match`);
-						}
-					} else if(x == parseInt(p2[j]-1) && (x % 3 !=2)){															// see if p1 card is on the left of p2 card
-						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p2[j])} #leftNum`).text()){
-							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
-							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
-							p1Temp.push(p2[j]);
-							p2.splice(j,1);
-							this.compareCheck = 1;
-							console.log(`does this work 4`);
-						} else {
-							this.compareCheck = 1;
-							console.log(`there is no match`);
-						}
-					} else {
-						this.compareCheck = 1;
-						console.log(`there is no match`);
-					}
-				}
-			}
-			else if (p1.length >0 && p2.length ==0) {
-				this.compareCheck = 1;
-				console.log(`compare check point 2`)
-			} else {
-				this.compareCheck = 1;
-				console.log(`does this work 5`)
-			}
-		}
-		if(this.compareCheck == 1){
-			if(p1Temp.length > 0){ 																								// add whats in the temporary array to the actual one after cards capturing has been completed.
-				player1.onBoard.push(p1Temp[0]);
-			}
-			p1Temp = [];
-		}
-	}
-
 
 	aiPicks(){ 																													// Function to let CPU pick a card randomly, and place it on the board randomly
 		if(player1.readyCheck == 1 && player1.compareCheck == 1 && gameBoard.length!=0){
@@ -198,7 +118,7 @@ class Player {
 			$(`#CPUCard${this.choice}`).remove();																				// remove card on front end
 			if(player2.readyCheck == 1 && player1.readyCheck == 1){
 				console.log(`AICard check point 8`)
-				this.compareCardsAI();
+				this.compareCards(player1);
 				if(this.compareCheck == 1){
 					this.resetRound();
 					console.log(`AICard check point 9`)
@@ -209,88 +129,87 @@ class Player {
 		}
 	}
 
-	compareCardsAI(){ 																											//compare cards at AI's turn + capture cards
+	compareCards(target){ 																											//compare cards at AI's turn + capture cards
 		let x = parseInt(this.boardChoice);
-		let p1 = player1.onBoard;
-		let p2 = player2.onBoard;
-		let p2Temp = [];
-		console.log(`AI Compare check point 1`)
+		let p1 = this.onBoard;
+		let p2 = target.onBoard;
+		let pTemp = [];
+		console.log(`Compare check point 1`)
 		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0){
 			if(p1.length >0 && p2.length >0){
-				for(let j in p1){
-					if(x == (parseInt(p1[j])+3)){ 																				// see if current picked card is on top of p2 card
-						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${parseInt(p1[j])} #botNum`).text()){
-							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`);
-							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
-							p2Temp.push(p1[j]);
-							p1.splice(j,1);
+				for(let j in p2){
+					let y = parseInt(p2[j]);
+					console.log(x);
+					console.log(y);
+					console.log(`${target.name}Card`);
+					if(x == (y+3)){ 																				                // see if current picked card is on top of p2 card
+						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
+							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
+							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							pTemp.push(p2[j]);
+							p2.splice(j,1);
 							this.compareCheck = 1;
-							console.log(`AI does this work 1`);
-							console.log(`${p1[j]}`);
-							console.log(j);
-							console.log(p1);
+							console.log(`does this work 1`);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (parseInt(p1[j])-3)){ 																		// see if p1 card is below of p2 card
-						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${parseInt(p1[j])} #topNum`).text()){
-							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`);
-							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
-							p2Temp.push(p1[j]);
-							p1.splice(j,1);
+					} else if(x == (y-3)){ 																		           // see if p1 card is below of p2 card
+						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
+							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
+							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							pTemp.push(p2[j]);
+							p2.splice(j,1);
 							this.compareCheck = 1;
-							console.log(`AI does this work 2`);
-							console.log(`${p1[j]}`);
-							console.log(j);
-							console.log(p1);
+							console.log(`does this work 2`);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p1[j]+1) && (x % 3 !=0)){															// see if p1 card is one the right of p2 card
-						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p1[j])} #rightNum`).text()){
-							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`)
-							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
-							p2Temp.push(p1[j]);
-							p1.splice(j,1);
+					} else if(x == (y+1) && (x % 3 !=0)){															// see if p1 card is one the right of p2 card
+						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
+							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
+							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							pTemp.push(p2[j]);
+							p2.splice(j,1);
 							this.compareCheck = 1;
-							console.log(`AI does this work 3`);
-							console.log(`${p1[j]}`);
-							console.log(j);
-							console.log(p1);
+							console.log(`does this work 3`);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p1[j]-1) && (x % 3 !=2)){															// see if p1 card is on the left of p2 card
-						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p1[j])} #leftNum`).text()){
-							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`)
-							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
-							p2Temp.push(p1[j]);
-							p1.splice(j,1);
+					} else if(x == (y-1) && (x % 3 !=2)){															// see if p1 card is on the left of p2 card
+						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
+							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
+							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							pTemp.push(p2[j]);
+							p2.splice(j,1);
 							this.compareCheck = 1;
-							console.log(`AI does this work 4`);
-							console.log(`${p1[j]}`);
-							console.log(j);
-							console.log(p1);
+							console.log(`does this work 4`);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
 					} else {
-						console.log(`AI Compare check point 2`)
+						console.log(`there is no match`);
 						this.compareCheck = 1;
 					}
 				}
 			}
+			else if (p1.length >0 && p2.length ==0) {
+				this.compareCheck = 1;
+				console.log(`there is no match at beginning`);
+			} else {
+				this.compareCheck = 1;
+				console.log(`does this work 5`)
+			}
 		}
 		if(this.compareCheck == 1){
-			if(p2Temp.length > 0){ 																								// add whats in the temporary array to the actual one after cards capturing has been completed.
-				player2.onBoard.push(p2Temp[0]);
+			if(pTemp.length > 0){ 																					// add whats in the temporary array to the actual one after cards capturing has been completed.
+				this.onBoard.push(pTemp[0]);
 			}
-			p2Temp = [];
-			console.log(p2Temp)
+			pTemp = [];
+			console.log(pTemp)
 		}
 	}
 
@@ -335,7 +254,9 @@ class Game {
 
 	gameStart(){
 		console.log(`Welcome ${player1.name} and ${player2.name}!!`);
+		player1.generateDeck(allCards);
 		player1.drawCard();
+		player2.generateDeck();
 		player2.drawCard();
 		if(gameBoard.length > 0){
 			this.clickBoardRegister();
@@ -377,16 +298,14 @@ class Game {
 
 // Global Variables //
 const player1 = new Player('Player');
-player1.generateDeck();
 const player2 = new Player('CPU');
-player2.generateDeck();
-
 
 
 // Buttons //
-$("aside").on("click", "button#reset", function(){  //reset button
+$("aside").on("click", "button#reset", function(){
     location.reload();
 });
+
 
 $("#click2Start").on("click", function(){
 	console.log(`===Game Start===`);
