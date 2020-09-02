@@ -124,7 +124,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (parseInt(p2[j])+1) && (p2[j] % 3 !=2)){							// see if p1 card is one the right of p2 card
+					} else if(x == (parseInt(p2[j])+1) && (p2[j] % 3 !=0)){							// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p2[j])} #rightNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -136,7 +136,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p2[j])-1 && (p2[j] % 3 !=0)){										// see if p1 card is on the left of p2 card
+					} else if(x == parseInt(p2[j])-1 && (p2[j] % 3 !=2)){										// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p2[j])} #leftNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -246,7 +246,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p1[j])+1 && (p1[j] % 3 !=2)){											// see if p1 card is one the right of p2 card
+					} else if(x == parseInt(p1[j])+1 && (p1[j] % 3 !=0)){											// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p1[j])} #rightNum`).text()){
 							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
@@ -257,7 +257,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p1[j])-1 && (p1[j] % 3 !=0)){											// see if p1 card is on the left of p2 card
+					} else if(x == parseInt(p1[j])-1 && (p1[j] % 3 !=2)){											// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p1[j])} #leftNum`).text()){
 							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
