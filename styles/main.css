@@ -44,6 +44,14 @@ h1 {
     align-content: center
 }
 
+.click2Start.#topNum{
+    position: absolute;
+    top: 0;
+    font-size: 50px;
+    right:30%;
+    left:25%;
+}
+
 #topNum{
     position: absolute;
     top: 0;
@@ -128,12 +136,12 @@ button{
     line-height: 1.3;
 }
 
-button:hover {
+.card:hover {
     transition: all 150ms linear;
-    opacity: .85;
+    opacity: .50;
 }
 
-button:active {
+.card:active {
     transition: all 150ms linear;
     opacity: .75;
 }

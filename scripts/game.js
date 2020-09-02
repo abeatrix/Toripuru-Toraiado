@@ -15,7 +15,7 @@ class Card {
 }
 
 class Player {
-    constructor(name){
+    constructor(name, deck){
 	  this.name = name;
 	  this.deck = [];
 	  this.hands = [];																											// cards the players start with
@@ -307,11 +307,20 @@ class Player {
 
 	gameOver(){
 		if(player1.onBoard.length>player2.onBoard.length){
-			swal("Player won!", "Refresh Browser to play again!", "success")
+			swal("Player won!", "Click the Reset button to play again!", "success")
+			$("#cpuHands").remove();
+			$(".playerHands").remove();
+			//$("aside").append(`<button id="reset">Reset</button>`);
 		} else if (player1.onBoard.length == player2.onBoard.length){
-			swal("It was a tie!", "Refresh Browser to play again!", "info")
+			swal("It was a tie!", "Click the Reset button to play again!", "info")
+			$("#cpuHands").remove();
+			$(".playerHands").remove();
+			//$("aside").append(`<button id="reset">Reset</button>`);
 		} else {
-			swal("CPU won!", "Refresh Browser to play again!", "error")
+			swal("CPU won!", "Click the Reset button to play again!", "error")
+			$("#cpuHands").remove();
+			$(".playerHands").remove();
+			//$("aside").append(`<button id="reset">Reset</button>`);
 		}
 	}
 
@@ -374,14 +383,22 @@ player2.generateDeck();
 
 
 // Buttons //
-$("#startbutton").on("click", function(){
-  console.log(`===Game Start===`);
-  let game = new Game('player1', 'player2');
-  game.gameStart();
-  $("#startbutton").remove();
+// $("#startbutton").on("click", function(){
+//   console.log(`===Game Start===`);
+//   let game = new Game('player1', 'player2');
+//   game.gameStart();
+//   $("#startbutton").remove();
+// });
+
+$("#reset").on("click", function(){
+    window.reload();
 });
 
 
-$("#reset").on("click", function(){
-    console.log(`reset`);
+$("#click2Start").on("click", function(){
+	console.log(`===Game Start===`);
+	let game = new Game('player1', 'player2');
+	game.gameStart();
+	$("#placeHolder").remove();
+	$("#click2Start").remove();
 });
