@@ -55,7 +55,7 @@ class Player {
 		if(this.readyCheck == 0 && this.compareCheck == 0){
 			console.log(`Player play Card Check Point 2`);
 			console.log(player1.handsChoice);
-			console.log(`click board choice check 2${player1.boardChoice}`);
+			console.log(`click board choice check 2 - ${player1.boardChoice}`);
 			if(this.handsChoice != null){
 				let i = parseInt(this.handsChoice); 															// where user click from hands
 				let y = parseInt(this.boardChoice); 												// the position of the board the user selected
@@ -78,8 +78,7 @@ class Player {
 						}
 					}
 					console.log(`checking pushing problem`);
-					console.log(this.choice);
-					this.onBoard.push(this.choice); 												// add card to the array that store what cards players have on board
+					this.onBoard.push(this.boardChoice); 												// add card to the array that store what cards players have on board
 					$(`#PlayerCard${i}`).remove(); 													// remove card from Hands in front-end
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
