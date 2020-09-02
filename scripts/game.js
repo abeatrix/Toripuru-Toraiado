@@ -310,17 +310,17 @@ class Player {
 			swal("Player won!", "Click the Reset button to play again!", "success")
 			$("#cpuHands").remove();
 			$(".playerHands").remove();
-			//$("aside").append(`<button id="reset">Reset</button>`);
+			$("aside").append(`<button id="reset">Reset</button>`);
 		} else if (player1.onBoard.length == player2.onBoard.length){
 			swal("It was a tie!", "Click the Reset button to play again!", "info")
 			$("#cpuHands").remove();
 			$(".playerHands").remove();
-			//$("aside").append(`<button id="reset">Reset</button>`);
+			$("aside").append(`<button id="reset">Reset</button>`);
 		} else {
 			swal("CPU won!", "Click the Reset button to play again!", "error")
 			$("#cpuHands").remove();
 			$(".playerHands").remove();
-			//$("aside").append(`<button id="reset">Reset</button>`);
+			$("aside").append(`<button id="reset">Reset</button>`);
 		}
 	}
 
@@ -382,18 +382,11 @@ const player2 = new Player('CPU');
 player2.generateDeck();
 
 
+
 // Buttons //
-// $("#startbutton").on("click", function(){
-//   console.log(`===Game Start===`);
-//   let game = new Game('player1', 'player2');
-//   game.gameStart();
-//   $("#startbutton").remove();
-// });
-
-$("#reset").on("click", function(){
-    window.reload();
+$("aside").on("click", "button#reset", function(){  //reset button
+    location.reload();
 });
-
 
 $("#click2Start").on("click", function(){
 	console.log(`===Game Start===`);

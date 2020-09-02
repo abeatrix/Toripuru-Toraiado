@@ -8,7 +8,7 @@ compareCards(target){ 																											//compare cards at AI's turn + 
 			if(p1.length >0 && p2.length >0){
 				for(let j in p1){
                     let y = parseInt(p1[j]);
-					if(x == (y+3)){ 																				// see if current picked card is on top of p2 card
+					if(x == (y+3)){ 																				     // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
