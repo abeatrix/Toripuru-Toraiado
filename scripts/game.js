@@ -134,11 +134,11 @@ class Player {
 		let p1 = this.onBoard;
 		let p2 = target.onBoard;
 		let pTemp = [];
-		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0){
+		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0 && gameBoard.length != 0){
 			if(p1.length >0 && p2.length >0){
 				for(let j in p2){
 					let y = parseInt(p2[j]);
-					if(x == (y+3)){ 																				                // see if current picked card is on top of p2 card
+					if(x == (y+3)){ 																				                // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -150,7 +150,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (y-3)){ 																		           // see if p1 card is below of p2 card
+					} else if(x == (y-3)){ 																		           // see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -200,8 +200,9 @@ class Player {
 				console.log(`does this work 5`)
 			}
 		}
-		if(this.compareCheck == 1){
-			if(pTemp.length > 0){ 																					// add whats in the temporary array to the actual one after cards capturing has been completed.
+		if(this.compareCheck == 1 && gameBoard.length != 0){
+			if(pTemp.length > 0){
+				console.log(pTemp)																				// add whats in the temporary array to the actual one after cards capturing has been completed.
 				this.onBoard.push(pTemp[0]);
 			}
 			pTemp = [];
