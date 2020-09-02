@@ -134,14 +134,10 @@ class Player {
 		let p1 = this.onBoard;
 		let p2 = target.onBoard;
 		let pTemp = [];
-		console.log(`Compare check point 1`)
 		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0){
 			if(p1.length >0 && p2.length >0){
 				for(let j in p2){
 					let y = parseInt(p2[j]);
-					console.log(x);
-					console.log(y);
-					console.log(`${target.name}Card`);
 					if(x == (y+3)){ 																				                // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
@@ -166,7 +162,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (y+1) && (x % 3 !=0)){															// see if p1 card is one the right of p2 card
+					} else if(x == (y+1) && (x % 3 != 0)){															// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -178,7 +174,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (y-1) && (x % 3 !=2)){															// see if p1 card is on the left of p2 card
+					} else if(x == (y-1) && (x % 3 != 2)){															// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -226,17 +222,17 @@ class Player {
 
 	gameOver(){
 		if(player1.onBoard.length>player2.onBoard.length){
-			swal("Player won!", "Click the Reset button to play again!", "success")
+			swal(`Player won!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `success`)
 			$("#cpuHands").remove();
 			$(".playerHands").remove();
 			$("aside").append(`<button id="reset">Reset</button>`);
 		} else if (player1.onBoard.length == player2.onBoard.length){
-			swal("It was a tie!", "Click the Reset button to play again!", "info")
+			swal(`It was a tie!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `info`)
 			$("#cpuHands").remove();
 			$(".playerHands").remove();
 			$("aside").append(`<button id="reset">Reset</button>`);
 		} else {
-			swal("CPU won!", "Click the Reset button to play again!", "error")
+			swal(`CPU won!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `error`)
 			$("#cpuHands").remove();
 			$(".playerHands").remove();
 			$("aside").append(`<button id="reset">Reset</button>`);
@@ -254,7 +250,8 @@ class Game {
 
 	gameStart(){
 		console.log(`Welcome ${player1.name} and ${player2.name}!!`);
-		player1.generateDeck(allCards);
+		this.makeMoreCards();
+		player1.generateDeck();
 		player1.drawCard();
 		player2.generateDeck();
 		player2.drawCard();
@@ -293,6 +290,22 @@ class Game {
 		}
 	}
 
+	makeMoreCards(){
+		let newCard = [];
+
+		for(let i=0; i < 20; i++){
+			newCard[i] = {
+				name: 'Card' + i,
+				top: Math.floor(Math.random()*8)+1,
+				right: Math.floor(Math.random()*8)+1,
+				bottom: Math.floor(Math.random()*8)+1,
+				left: Math.floor(Math.random()*8)+1,
+				img: '',
+			}
+			allCards.push(newCard[i]);
+		}
+	}
+
 }
 
 
@@ -311,6 +324,6 @@ $("#click2Start").on("click", function(){
 	console.log(`===Game Start===`);
 	let game = new Game('player1', 'player2');
 	game.gameStart();
-	$("#placeHolder").remove();
 	$("#click2Start").remove();
+	$(".placeHolder").remove();
 });

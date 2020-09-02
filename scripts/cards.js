@@ -91,3 +91,21 @@ let allCards= [
 		img: '',
     },
 ];
+
+
+// const makeMoreCards = function(){
+// 	let newCard = [];
+
+// 	for(let i=0; i < 20; i++){
+// 		newCard[i] = {
+// 			name: 'Card' + i,
+// 			top: Math.floor(Math.random()*8)+1,
+// 			right: Math.floor(Math.random()*8)+1,
+// 			bottom: Math.floor(Math.random()*8)+1,
+// 			left: Math.floor(Math.random()*8)+1,
+// 			img: '',
+// 		}
+// 		allCards.push(newCard[i]);
+// 	}
+// }
+
