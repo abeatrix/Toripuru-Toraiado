@@ -19,19 +19,19 @@ class Player {
 	  this.name = name;
 	  this.deck = [];
 	  this.hands = [];
+	  this.handsCounter = [];
 	  this.handsChoice = null;																		// the card from hand that the player has CLICKED
       this.boardChoice = null; 																		// the position on board that the player has CLICKED
 	  this.choice = null; 																			// the index of the card that the player currently selected
 	  this.onBoard = []; 																			// player's cards' positions on board
 	  this.readyCheck = 0; 																			// ready check
 	  this.compareCheck = 0;																		// check if the cards have been compared this round
-
     }
 
     generateDeck(){
         allCards.forEach((playcard) => {
         const card = new Card(playcard.name, playcard.top, playcard.right, playcard.bottom, playcard.left, playcard.img);
-        this.deck.push(card); 																	// add newly created cards to deck
+		this.deck.push(card); 																	// add newly created cards to deck
 		});
 		this.deck.sort(() => Math.random() - 0.5); 												//shuffle deck before players draw from them to make sure that they will always be different
 	}
@@ -40,7 +40,6 @@ class Player {
 		while(this.hands.length < 5){
 			this.hands.push(this.deck[0]);
 			this.deck.splice(0,1);
-			//console.log(`${this.deck[0].name} has been added to ${this.name} hands!`);
 		};
 		for(let i in this.hands){																// add cards to hands in front-end
 			$(`#${this.name}Card${i} #topNum`).text(`${this.hands[i].top}`);
@@ -80,6 +79,9 @@ class Player {
 						this.readyCheck = 1;
 					}
 				}
+			}
+			if(player2.hands.length === 5 && player2.handsCounter.length === 0){
+				player2.handsCounter = player2.hands.slice();
 			}
 		}
 		player2.aiPicks();
@@ -166,23 +168,19 @@ class Player {
 
 
 	aiPicks(){ 																						// Function to let CPU pick a card randomly, and place it on the board randomly
-		console.log(`AICard check point 1`)
 		if(player1.readyCheck == 1 && player1.compareCheck == 1 && gameBoard.length!=0){
-			if(this.hands.length === 5){
-				this.deck = this.hands;
-			}
 			let x = gameBoard[Math.floor(Math.random() *gameBoard.length)]; 						// computer randomly find a position on gameboard to place their cards
 			this.boardChoice = x; 																	// add the CPU choice to the variable boardChoice for compareCard function
-			const aiRandom = this.deck[Math.floor(Math.random() *this.deck.length)];				// computer randomly find a number for the index in hands to play
+			const aiRandom = this.handsCounter[Math.floor(Math.random() *this.handsCounter.length)];				// computer randomly find a number for the index in hands to play
 			for(let i in this.hands){
 				if(this.hands[i].name === aiRandom.name){
 					this.choice = i;
 					console.log(`AICard check point 5========= what is i = ${i}`)
 				}
 			}
-			for(let i in this.deck){
-				if(this.deck[i].name === aiRandom.name){
-					this.deck.splice(i, 1);
+			for(let i in this.handsCounter){
+				if(this.handsCounter[i].name === aiRandom.name){
+					this.handsCounter.splice(i, 1);
 				}
 			}
 			$(`#cardBoard${x}`).addClass(`${this.name}Card`);									// add selected card from hands to board
@@ -292,9 +290,6 @@ class Player {
 		if(this.compareCheck == 1){
 			if(p2Temp.length > 0){ 																								// add whats in the temporary array to the actual one after cards capturing has been completed.
 				player2.onBoard.push(p2Temp[0]);
-				console.log(`AI compare check onboad Push check`)
-				console.log(p2Temp)
-				console.log(`AI Compare check point 4`)
 			}
 			p2Temp = [];
 			console.log(p2Temp)
@@ -432,5 +427,3 @@ $("#startbutton").on("click", function(){
 $("#reset").on("click", function(){
     console.log(`reset`);
 });
-
-
