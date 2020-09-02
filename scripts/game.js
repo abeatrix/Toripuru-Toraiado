@@ -183,7 +183,7 @@ class Player {
 
 	aiPicks(){ 																						// Function to let CPU pick a card randomly, and place it on the board randomly
 		console.log(`AICard check point 1`)
-		if(player1.readyCheck == 1 && player1.compareCheck == 1){
+		if(player1.readyCheck == 1 && player1.compareCheck == 1 && gameBoard.length!=0){
 			let x = gameBoard[Math.floor(Math.random() *gameBoard.length)]; 						// computer randomly find a position on gameboard to place their cards
 			console.log(`AI picked ${x} to play on board ==========`)
 			this.boardChoice = x; 																	// add the CPU choice to the variable boardChoice for compareCard function
@@ -215,6 +215,8 @@ class Player {
 					console.log(`AICard check point 5`)
 				}
 			}
+		} else if (gameBoard.length == 0){
+			this.gameOver();
 		}
 	}
 
@@ -317,6 +319,16 @@ class Player {
 		player2.compareCheck = 0;
 	}
 
+	gameOver(){
+		if(player1.onBoard.length>player2.onBoard.length){
+			alert(`Player won!`)
+		} else if (player1.onBoard.length == player2.onBoard.length){
+			alert(`it was a tie!`)
+		} else {
+			alert(`CPU won!`)
+		}
+	}
+
 }
 
 class Game {
@@ -364,6 +376,9 @@ class Game {
 			this.clickBoardRegister();
 			this.clickHandsRegister();
 		}
+		if(gameBoard.length == 0){
+			this.gameOver();
+		}
 	}
 
 
@@ -392,15 +407,15 @@ class Game {
 		}
 	}
 
-	gameOver(){
-		if(player1.onBoard.length>player2.onBoard.length){
-			alert(`Player won!`)
-		} else if (player1.onBoard.length == player2.onBoard.length){
-			alert(`it was a tie!`)
-		} else {
-			alert(`CPU won!`)
-		}
-	}
+	// gameOver(){
+	// 	if(player1.onBoard.length>player2.onBoard.length){
+	// 		alert(`Player won!`)
+	// 	} else if (player1.onBoard.length == player2.onBoard.length){
+	// 		alert(`it was a tie!`)
+	// 	} else {
+	// 		alert(`CPU won!`)
+	// 	}
+	// }
 
 }
 
