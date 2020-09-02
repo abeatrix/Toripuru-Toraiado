@@ -54,6 +54,8 @@ class Player {
 		console.log(`Player play Card Check Point 1`);
 		if(this.readyCheck == 0 && this.compareCheck == 0){
 			console.log(`Player play Card Check Point 2`);
+			console.log(player1.handsChoice);
+			console.log(`click board choice check 2${player1.boardChoice}`);
 			if(this.handsChoice != null){
 				let i = parseInt(this.handsChoice); 															// where user click from hands
 				let y = parseInt(this.boardChoice); 												// the position of the board the user selected
@@ -75,7 +77,9 @@ class Player {
 							console.log(`playaCard check point 4`)
 						}
 					}
-					this.onBoard.push(this.choice); 													// add card to the array that store what cards players have on board
+					console.log(`checking pushing problem`);
+					console.log(this.choice);
+					this.onBoard.push(this.choice); 												// add card to the array that store what cards players have on board
 					$(`#PlayerCard${i}`).remove(); 													// remove card from Hands in front-end
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
@@ -93,6 +97,7 @@ class Player {
 
 	compareCardsPlayer(){ 																									//compare cards at player's turn + capture cards
 		let x = this.boardChoice;
+		console.log(`click board choice check in compare 1 ${player1.boardChoice}`);
 		let p1 = player1.onBoard;
 		let p2 = player2.onBoard;
 		let p1Temp = [];
@@ -124,7 +129,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (parseInt(p2[j])+1) && (p2[j] % 3 !=0)){							// see if p1 card is one the right of p2 card
+					} else if(x == (parseInt(p2[j])+1) && (x % 3 !=0)){							// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p2[j])} #rightNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -136,7 +141,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p2[j])-1 && (p2[j] % 3 !=2)){										// see if p1 card is on the left of p2 card
+					} else if(x == parseInt(p2[j]-1) && (x % 3 !=2)){										// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p2[j])} #leftNum`).text()){
 							$(`#cardBoard${parseInt(p2[j])}`).removeClass(`CPUCard`)
 							$(`#cardBoard${parseInt(p2[j])}`).addClass(`PlayerCard`);
@@ -164,15 +169,14 @@ class Player {
 		}
 		if(this.compareCheck == 1){
 			if(p1Temp.length > 0){ 																								// add whats in the temporary array to the actual one after cards capturing has been completed.
-				for(let i in p1Temp){
-					player1.onBoard.push(p1Temp[i]);
-					console.log(`compare check onboad Push check`)
-					console.log(p1Temp[i])
-					console.log(p1)
-				}
-				p1Temp = [];
+				player1.onBoard.push(p1Temp[0]);
+				console.log(`compare check onboad Push check`)
+				console.log(p1Temp[0])
+				console.log(p1)
+				console.log(p1Temp)
 				console.log(`compare check point 3`)
 			}
+			p1Temp = [];
 		}
 		console.log(`compare check point 4`);
 	}
@@ -182,7 +186,7 @@ class Player {
 		console.log(`AICard check point 1`)
 		if(player1.readyCheck == 1 && player1.compareCheck == 1){
 			let x = gameBoard[Math.floor(Math.random() *gameBoard.length)]; 						// computer randomly find a position on gameboard to place their cards
-			console.log(`AI picked ${x}`)
+			console.log(`AI picked ${x} to play on board ==========`)
 			this.boardChoice = x; 																	// add the CPU choice to the variable boardChoice for compareCard function
 			const aiRandom = Math.floor(Math.random() *this.hands.length);
 			this.handsChoice = this.hands[aiRandom].name;
@@ -224,13 +228,17 @@ class Player {
 		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0){
 			if(p1.length >0 && p2.length >0){
 				for(let j in p1){
-					if(x == (parseInt(p1[j])+3) ){ 																			// see if current picked card is on top of p2 card
+					if(x == (parseInt(p1[j])+3)){ 																			// see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${parseInt(p1[j])} #botNum`).text()){
 							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`);
 							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[j]);
 							p1.splice(j,1);
 							this.compareCheck = 1;
+							console.log(`AI does this work 1`);
+							console.log(`${p1[j]}`);
+							console.log(j);
+							console.log(p1);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
@@ -242,28 +250,40 @@ class Player {
 							p2Temp.push(p1[j]);
 							p1.splice(j,1);
 							this.compareCheck = 1;
+							console.log(`AI does this work 2`);
+							console.log(`${p1[j]}`);
+							console.log(j);
+							console.log(p1);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p1[j])+1 && (p1[j] % 3 !=0)){											// see if p1 card is one the right of p2 card
+					} else if(x == parseInt(p1[j]+1) && (x % 3 !=0)){											// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${parseInt(p1[j])} #rightNum`).text()){
 							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[j]);
 							p1.splice(j,1);
 							this.compareCheck = 1;
+							console.log(`AI does this work 3`);
+							console.log(`${p1[j]}`);
+							console.log(j);
+							console.log(p1);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == parseInt(p1[j])-1 && (p1[j] % 3 !=2)){											// see if p1 card is on the left of p2 card
+					} else if(x == parseInt(p1[j]-1) && (x % 3 !=2)){											// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${parseInt(p1[j])} #leftNum`).text()){
 							$(`#cardBoard${parseInt(p1[j])}`).removeClass(`PlayerCard`)
 							$(`#cardBoard${parseInt(p1[j])}`).addClass(`CPUCard`);
 							p2Temp.push(p1[j]);
 							p1.splice(j,1);
 							this.compareCheck = 1;
+							console.log(`AI does this work 4`);
+							console.log(`${p1[j]}`);
+							console.log(j);
+							console.log(p1);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
@@ -277,12 +297,13 @@ class Player {
 		}
 		if(this.compareCheck == 1){
 			if(p2Temp.length > 0){ 																								// add whats in the temporary array to the actual one after cards capturing has been completed.
-				for(let i in p2Temp){
-					player2.onBoard.push(p2Temp[i]);
-				}
-				p2Temp = [];
+				player2.onBoard.push(p2Temp[0]);
+				console.log(`AI compare check onboad Push check`)
+				console.log(p2Temp)
 				console.log(`AI Compare check point 4`)
 			}
+			p2Temp = [];
+			console.log(p2Temp)
 		}
 	}
 
@@ -351,6 +372,7 @@ class Game {
 		for(let i in gameBoard){
 			$(`.gameBoard #cardBoard${i}`).on("click", function(){
 				player1.boardChoice = i;
+				console.log(`click board choice ${player1.boardChoice}`);
 				console.log(`Player picked card to place in ${player1.boardChoice}`)
 				$(`.gameBoard #cardBoard${i}`).unbind();
 			})
