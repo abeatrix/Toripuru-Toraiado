@@ -325,7 +325,6 @@ class Game {
 
 	gameOver(){
 		for(let i = player1.onBoard.length -1 ; i >= 0; --i){
-			console.log(player1.onBoard[i])
 			if(isNaN(player1.onBoard[i])){
 				player1.onBoard.splice(i,1);
 			}

@@ -28,6 +28,7 @@ h1 {
 /* START SCREEN */
 .card#click2Start{
     background: #c2e9fc;
+    /* background-image: url("https://i.ibb.co/4PqTvJ4/83941944-p0.jpg"); */
     place-content: center;
     color: white;
 }
