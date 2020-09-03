@@ -7,7 +7,6 @@ board color: dff0e3
 
 body {
     background: #fff;
-    /* background-image: url("https://i.ibb.co/4PqTvJ4/83941944-p0.jpg"); */
     text-align: center;
     font-family: 'Abel', sans-serif;
     max-width: 1300px;
@@ -28,12 +27,12 @@ h1 {
     color: white;
 }
 
-#click2Start#topNum{
+#click2StartText{
     position: absolute;
-    top: 0;
-    font-size: 40px;
-    right:30%;
-    left:25%;
+    width: 200px;
+    font-size: 30px;
+    top: 40%;
+    margin: auto;
 }
 
 #howtoplaytext{
@@ -47,7 +46,6 @@ h1 {
 
 
 #instruction{
-    position: relative;
     text-align: left;
     font-size: 20px;
     visibility: hidden;
@@ -55,8 +53,9 @@ h1 {
 
 #howtoplay:hover #instruction{
     visibility: visible;
-    max-width: 200px;
     opacity: 1;
+    width: 500px
+    z-index: 2;
 }
 
 #beatrixText{
@@ -74,12 +73,13 @@ h1 {
     background: #dff0e3;
     border-radius: 2px;
     height: 200px;
+    width: 200px;
     padding: 1px;
     position: relative;
-    width: 200px;
     display: inline-block;
     cursor: pointer;
     font-family: 'Abel', sans-serif;
+
 }
 
 .card:hover {
@@ -90,6 +90,11 @@ h1 {
 .card:active {
     transition: all 150ms linear;
     opacity: .75;
+}
+
+/* Board position */
+.gameBoard, #cpuHands, .playerHands {
+
 }
 
 /* Foarmats for All cards */
@@ -142,8 +147,7 @@ h1 {
 
 
 /* Cards in Hands */
-#cpuHands {
-    /* background-color: #dff0e3; */
+#cpuHands .playerHands {
     margin-bottom: 10px;
     padding: 10px;
     display: flex;
@@ -155,16 +159,6 @@ h1 {
 .CPUCard{
     background: #E6F0FF;
     color: #6fa4f7;
-}
-
-.playerHands {
-    /* background-color: #dff0e3; */
-    margin-top: 10px;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center
 }
 
 .PlayerCard{
