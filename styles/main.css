@@ -7,6 +7,7 @@ board color: dff0e3
 
 body {
     background: #fff;
+    /* background-image: url("https://i.ibb.co/4PqTvJ4/83941944-p0.jpg"); */
     text-align: center;
     font-family: 'Abel', sans-serif;
     max-width: 1300px;
@@ -57,7 +58,7 @@ h1 {
 }
 
 .card#click2Start{
-    background: beige;
+    background: #c2e9fc;
     place-content: center;
 }
 
@@ -103,7 +104,7 @@ h1 {
 }
 
 #cpuHands {
-    background-color: #dff0e3;
+    /* background-color: #dff0e3; */
     color: grey;
     margin-bottom: 10px;
     padding: 10px;
@@ -119,7 +120,7 @@ h1 {
 }
 
 .playerHands {
-    background-color: #dff0e3;
+    /* background-color: #dff0e3; */
     color: grey;
     margin-top: 10px;
     padding: 10px;
@@ -160,19 +161,31 @@ button{
 }
 @keyframes blinkingText{
     0%{ color: transparent;}
-    50%{color: #ffcba6;}
-    80%{color: #e69681;}
-    100%{color: #ffcba6;;}
+    50%{color: #c3edf7;}
+    80%{color: white;}
+    100%{color: #c3edf7;;}
 }
 
 
 
-/* .row1 {
-    display: inline-block;
-}
-.row2 {
-    display: inline-block;
-}
-.row3 {
-    display: inline-block;
+@media screen and (max-width: 600px) {
+    body {
+        max-width: 600px;
+    }
+
+    .card {
+        background: #dff0e3;
+        border-radius: 2px;
+        height: 100px;
+        padding: 1px;
+        position: relative;
+        width: 100px;
+        display: inline-block;
+        cursor: pointer;
+        font-family: 'Abel', sans-serif;
+    }
+  }
+
+  /* #cpuHands {
+    display: hide;
 } */
