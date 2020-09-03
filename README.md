@@ -43,6 +43,6 @@ By deadline, the game will be:
 <br/><b>Instruction Art is from 萩酢 on pixiv:</b>
 
 ## -Updates
-9/3/2020  Added visual effect and worked on front page of the game.
-9/2/2020  Added function to generate more cards.
-9/1/2020  Base game completed. Will add more rules and cards to the game in the next few days. Would like to add visual effect in the near future.
+- 9/3/2020  Added visual effect and worked on front page of the game.
+- 9/2/2020  Added function to generate more cards.
+- 9/1/2020  Base game completed. Will add more rules and cards to the game in the next few days. Would like to add visual effect in the near future.
