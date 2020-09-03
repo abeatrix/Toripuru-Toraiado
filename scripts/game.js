@@ -56,7 +56,7 @@ class Player {
 				let y = parseInt(this.boardChoice); 																			// the position of the board the user selected
 				this.boardChoice = y;																							// add the user choice to the variable boardChoice for compareCard function
 				let z = this.hands[i]; 																							// this is the card that the player picked from their hands
-				$(`#cardBoard${y}`).addClass(`${this.name}Card`, 1000, `linear`);
+				$(`#cardBoard${y}`).addClass(`${this.name}Card`, 1500, `linear`);
 				$(`#cardBoard${y} #topNum`).text(`${z.top}`);
 				$(`#cardBoard${y} #leftNum`).text(`${z.left}`);
 				$(`#cardBoard${y} #botNum`).text(`${z.bottom}`);
@@ -72,7 +72,7 @@ class Player {
 					console.log(`checking pushing problem`);
 					if(typeof(this.boardChoice) != `NaN`){
 						this.onBoard.push(this.boardChoice);
-					}																	// add card to the array that store what cards players have on board
+					}																											// add card to the array that store what cards players have on board
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
 					this.compareCards(player2);
@@ -89,7 +89,7 @@ class Player {
 			this.compareCards(player2);
 			if(this.compareCheck == 1){
 				this.gameOver();
-				$(`#cardBoard${y}`).unbind();																			// make selected tile not clickable anymore
+				$(`#cardBoard${y}`).unbind();																					// make selected tile not clickable anymore
 			}
 		}
 	}
@@ -109,13 +109,15 @@ class Player {
 					this.handsCounter.splice(i, 1);
 				}
 			}
-			$(`#cardBoard${x}`).addClass(`${this.name}Card`, 1000, `linear`);																	// add selected card from hands to board
+			$(`#cardBoard${x}`).addClass(`${this.name}Card`, 1500, `linear`);																	// add selected card from hands to board
 			$(`#cardBoard${x} #topNum`).text(`${aiRandom.top}`);
 			$(`#cardBoard${x} #leftNum`).text(`${aiRandom.left}`);
 			$(`#cardBoard${x} #botNum`).text(`${aiRandom.bottom}`);
 			$(`#cardBoard${x} #rightNum`).text(`${aiRandom.right}`);
 			$(`#cardBoard${x}`).unbind();																						// make selected tile not clickable anymore
-			this.onBoard.push(x); 																								// add card to the array that store what cards players have on board
+			if(typeof(this.boardChoice) != `NaN`){																				// add card to the array that store what cards players have on board
+				this.onBoard.push(this.boardChoice);
+			}
 			for(let i in gameBoard){
 				if(gameBoard[i] == x){
 					gameBoard.splice(i,1);																						// remove position from gameBoard
@@ -133,10 +135,6 @@ class Player {
 					console.log(`player2.onBoard.length ${player2.onBoard.length}`)
 				}
 			}
-		} else if (gameBoard.length == 0){
-			player1.compareCards(player2);
-			console.log(`i end here AI`)
-			setTimeout(this.gameOver, 500);
 		}
 	}
 
@@ -145,6 +143,7 @@ class Player {
 		let p1 = this.onBoard;
 		let p2 = target.onBoard;
 		let pTemp = [];
+		let iTemp = [];
 		if($(`#cardBoard${x} #topNum`).text() > 0 && this.compareCheck == 0){
 			console.log(`check point 1_1`)
 			if(p1.length >0 && p2.length >0){
@@ -152,12 +151,14 @@ class Player {
 				for(let j in p2){
 					let y = parseInt(p2[j]);
 					console.log(`just checking`);
-					console.log(`${target.name}'s on board number current loop ${y}`);
+					console.log(`${this.name} is looping target array has ${target.onBoard}`);
+					console.log(`${this.name} is looping ${target.name}'s on board-current on: ${y}`);
 					if(y != `NaN` && x == (y+3)){ 																				               	 // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
 							pTemp.push(p2[j]);
-							p2.splice(j,1);
+							iTemp.push(j);
+							//p2.splice(j,1);
 							this.compareCheck = 1;
 							console.log(`does this work 1`);
 						} else {
@@ -166,9 +167,9 @@ class Player {
 						}
 					} else if(y != `NaN` && x == (y-3)){ 																		          			 // see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
 							pTemp.push(p2[j]);
-							p2.splice(j,1);
+							iTemp.push(j);
 							this.compareCheck = 1;
 							console.log(`does this work 2`);
 						} else {
@@ -177,9 +178,9 @@ class Player {
 						}
 					} else if(y != `NaN` && x == (y+1) && (x % 3 != 0)){																			// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
 							pTemp.push(p2[j]);
-							p2.splice(j,1);
+							iTemp.push(j);
 							this.compareCheck = 1;
 							console.log(`does this work 3`);
 						} else {
@@ -188,16 +189,20 @@ class Player {
 						}
 					} else if(y != `NaN` && x == (y-1) && (x % 3 != 2)){																			// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
 							pTemp.push(p2[j]);
-							p2.splice(j,1);
+							iTemp.push(j);
 							this.compareCheck = 1;
 							console.log(`does this work 4`);
 						} else {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else {
+					} else if( isNaN(y) == `true`) {
+						console.log(p2[j]);
+						console.log(`=============HOW DID IT GET HERE ===============`);
+						iTemp.push(j);
+					}else {
 						console.log(`there is no match`);
 						this.compareCheck = 1;
 					}
@@ -215,16 +220,22 @@ class Player {
 			console.log(`${pTemp.length} = pTemp Length`);
 			if(pTemp.length > 0 && gameBoard.length >= 0){
 				for(let i in pTemp){
-					console.log(`${this.name}.onBoard.length`);
-					console.log(`${this.onBoard.length}. above onBoard.length`);
-					this.onBoard.push(pTemp[i]);																						// add whats in the temporary array to the actual one after cards capturing has been completed.
+					console.log(`${pTemp[i]}.currently adding to ${this.name}'s onBoard.length`);
+					console.log(`${this.onBoard.length} is ${this.name}'s onBoard.length`);
+					this.onBoard.push(pTemp[i]);																									// add whats in the temporary array to the actual one after cards capturing has been completed.
+				}
+				for(let i = iTemp.length -1 ; i >= 0; --i){
+					console.log(`${iTemp.length} iTemp length`);
+					p2.splice(parseInt(iTemp[i]),1)
+					this.compareCheck = 1;
 				}
 			}
 			pTemp = [];
+			iTemp = [];
 		}
 	}
 
-	resetRound(){																													// reset all decisions made
+	resetRound(){																																	// reset all decisions made
 		player1.handsChoice = null;
 		player2.handsChoice = null;
 		player1.boardChoice = null;
@@ -255,8 +266,8 @@ class Player {
 
 class Game {
     constructor(player1, player2) {
-      this.player1 = player1;            																							// register player 1
-	  this.player2 = player2;																										// register player 2
+      this.player1 = player1;            																											// register player 1
+	  this.player2 = player2;																														// register player 2
     }
 
 	gameStart(){
@@ -276,7 +287,7 @@ class Game {
 	}
 
 
-	clickBoardRegister(){ 																											// create cilck listener for every tile on board
+	clickBoardRegister(){ 																															// create cilck listener for every tile on board
 		for(let i in gameBoard){
 			if(gameBoard.length > 0){
 				$(`.gameBoard #cardBoard${i}`).on("click", function(){
@@ -286,13 +297,20 @@ class Game {
 		}
 	}
 
-	clickHandsRegister(){ 																											// create cilck listener for every card in hands
+	clickHandsRegister(){ 																															// create cilck listener for every card in hands
 		for(let i in player1.hands){
 			$(`.playerHands #PlayerCard${i}`).on("click", function(){
 				player1.handsChoice = i;
 				if(player1.handsChoice != null){
 					player1.playaCard();
-					setTimeout(function(){ player2.aiPicks()}, 500);
+					setTimeout(function(){
+						player2.aiPicks()
+						if (gameBoard.length == 0){
+							player1.compareCards(player2);
+							player1.gameOver()
+						}
+							//setTimeout(player1.gameOver, 100);}
+					}, 500);
 				}
 				$(this).prop('disabled', true);
 				setTimeout(function(){
@@ -301,7 +319,7 @@ class Game {
 		}
 	}
 
-	makeMoreCards(){ 																												// generate more random cards
+	makeMoreCards(){ 																																// generate more random cards
 		let newCard = [];
 		for(let i=0; i < 20; i++){
 			newCard[i] = {

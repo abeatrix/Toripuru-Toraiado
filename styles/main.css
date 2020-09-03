@@ -20,6 +20,39 @@ h1 {
     font-family: 'Abel', sans-serif;
 }
 
+
+/* START SCREEN */
+.card#click2Start{
+    background: #c2e9fc;
+    place-content: center;
+    color: white;
+}
+
+#click2Start #topNum{
+    position: absolute;
+    top: 0;
+    font-size: 40px;
+    right:30%;
+    left:25%;
+}
+
+#topNumstart{
+    position: absolute;
+    text-align: center;
+    max-width: 150em;
+    font-size: 20px;
+}
+
+#botNumBee{
+    position: absolute;
+    text-align: right;
+    max-width: 150em;
+    font-size: 20px;
+    bottom: 0;
+    right: 0;
+}
+
+/* Settings for All Cards */
 .card {
     background: #dff0e3;
     border-radius: 2px;
@@ -42,7 +75,7 @@ h1 {
     opacity: .75;
 }
 
-
+/* Foarmats for All cards */
 .numColumn{
     display: flex;
     flex-direction: column;
@@ -55,19 +88,6 @@ h1 {
     flex-direction: row;
     justify-content: space-between;
     align-content: center
-}
-
-.card#click2Start{
-    background: #c2e9fc;
-    place-content: center;
-}
-
-#click2Start #topNum{
-    position: absolute;
-    top: 0;
-    font-size: 40px;
-    right:30%;
-    left:25%;
 }
 
 #topNum{
@@ -103,9 +123,10 @@ h1 {
     bottom:25%;
 }
 
+
+/* Cards in Hands */
 #cpuHands {
     /* background-color: #dff0e3; */
-    color: grey;
     margin-bottom: 10px;
     padding: 10px;
     display: flex;
@@ -121,7 +142,6 @@ h1 {
 
 .playerHands {
     /* background-color: #dff0e3; */
-    color: grey;
     margin-top: 10px;
     padding: 10px;
     display: flex;
@@ -135,6 +155,7 @@ h1 {
     color: #f571aa;
 }
 
+/* BUTTONS */
 button{
     display: inline-block;
     background-color: pink;
@@ -161,9 +182,9 @@ button{
 }
 @keyframes blinkingText{
     0%{ color: transparent;}
-    50%{color: #c3edf7;}
-    80%{color: white;}
-    100%{color: #c3edf7;;}
+    50%{color: #fff;}
+    80%{color: #c3edf7;}
+    100%{color: #fff;}
 }
 
 
