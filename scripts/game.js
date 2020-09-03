@@ -56,7 +56,7 @@ class Player {
 				let y = parseInt(this.boardChoice); 																			// the position of the board the user selected
 				this.boardChoice = y;																							// add the user choice to the variable boardChoice for compareCard function
 				let z = this.hands[i]; 																							// this is the card that the player picked from their hands
-				$(`#cardBoard${y}`).addClass(`${this.name}Card`, 1500, `linear`);
+				$(`#cardBoard${y}`).addClass(`${this.name}Card`, 1000, `linear`)
 				$(`#cardBoard${y} #topNum`).text(`${z.top}`);
 				$(`#cardBoard${y} #leftNum`).text(`${z.left}`);
 				$(`#cardBoard${y} #botNum`).text(`${z.bottom}`);
@@ -109,7 +109,7 @@ class Player {
 					this.handsCounter.splice(i, 1);
 				}
 			}
-			$(`#cardBoard${x}`).addClass(`${this.name}Card`, 1500, `linear`);																	// add selected card from hands to board
+			$(`#cardBoard${x}`).addClass(`${this.name}Card`, 1000, `linear`);																	// add selected card from hands to board
 			$(`#cardBoard${x} #topNum`).text(`${aiRandom.top}`);
 			$(`#cardBoard${x} #leftNum`).text(`${aiRandom.left}`);
 			$(`#cardBoard${x} #botNum`).text(`${aiRandom.bottom}`);
@@ -155,10 +155,9 @@ class Player {
 					console.log(`${this.name} is looping ${target.name}'s on board-current on: ${y}`);
 					if(y != `NaN` && x == (y+3)){ 																				               	 // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
+							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
 							iTemp.push(j);
-							//p2.splice(j,1);
 							this.compareCheck = 1;
 							console.log(`does this work 1`);
 						} else {
@@ -167,7 +166,7 @@ class Player {
 						}
 					} else if(y != `NaN` && x == (y-3)){ 																		          			 // see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
+							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
 							iTemp.push(j);
 							this.compareCheck = 1;
@@ -178,7 +177,7 @@ class Player {
 						}
 					} else if(y != `NaN` && x == (y+1) && (x % 3 != 0)){																			// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
+							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
 							iTemp.push(j);
 							this.compareCheck = 1;
@@ -189,7 +188,7 @@ class Player {
 						}
 					} else if(y != `NaN` && x == (y-1) && (x % 3 != 2)){																			// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
-							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)
+							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
 							iTemp.push(j);
 							this.compareCheck = 1;
@@ -246,22 +245,6 @@ class Player {
 		player2.compareCheck = 0;
 	}
 
-	gameOver(){
-		if(player1.onBoard.length>player2.onBoard.length){
-			swal(`Player won!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `success`)
-			$("#cpuHands, .playerHands").remove();
-			$("aside").append(`<button id="reset">Reset</button>`);
-		} else if (player1.onBoard.length == player2.onBoard.length){
-			swal(`It was a tie!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `info`)
-			$("#cpuHands, .playerHands").remove();
-			$("aside").append(`<button id="reset">Reset</button>`);
-		} else {
-			swal(`CPU won!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `error`)
-			$("#cpuHands, .playerHands").remove();
-			$("aside").append(`<button id="reset">Reset</button>`);
-		}
-	}
-
 }
 
 class Game {
@@ -297,7 +280,8 @@ class Game {
 		}
 	}
 
-	clickHandsRegister(){ 																															// create cilck listener for every card in hands
+	clickHandsRegister(){
+		const gameEnds = this.gameOver;																												// create cilck listener for every card in hands
 		for(let i in player1.hands){
 			$(`.playerHands #PlayerCard${i}`).on("click", function(){
 				player1.handsChoice = i;
@@ -307,9 +291,8 @@ class Game {
 						player2.aiPicks()
 						if (gameBoard.length == 0){
 							player1.compareCards(player2);
-							player1.gameOver()
+							gameEnds();
 						}
-							//setTimeout(player1.gameOver, 100);}
 					}, 500);
 				}
 				$(this).prop('disabled', true);
@@ -331,6 +314,22 @@ class Game {
 				img: '',
 			}
 			allCards.push(newCard[i]);
+		}
+	}
+
+	gameOver(){
+		if(player1.onBoard.length>player2.onBoard.length){
+			swal(`Player won!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `success`)
+			$("#cpuHands, .playerHands").remove();
+			$("aside").append(`<button id="reset">Reset</button>`);
+		} else if (player1.onBoard.length == player2.onBoard.length){
+			swal(`It was a tie!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `info`)
+			$("#cpuHands, .playerHands").remove();
+			$("aside").append(`<button id="reset">Reset</button>`);
+		} else {
+			swal(`CPU won!`, `Player: ${player1.onBoard.length} CPU: ${player2.onBoard.length}`, `error`)
+			$("#cpuHands, .playerHands").remove();
+			$("aside").append(`<button id="reset">Reset</button>`);
 		}
 	}
 
