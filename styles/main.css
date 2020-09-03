@@ -28,7 +28,7 @@ h1 {
     color: white;
 }
 
-#click2Start #topNum{
+#click2Start#topNum{
     position: absolute;
     top: 0;
     font-size: 40px;
@@ -36,20 +36,37 @@ h1 {
     left:25%;
 }
 
-#topNumstart{
+#howtoplaytext{
     position: absolute;
-    text-align: center;
-    max-width: 150em;
+    max-width: 200px;
     font-size: 20px;
+    top: 10px;
+    visibility: visible;
+    text-align: left;
 }
 
-#botNumBee{
+
+#instruction{
+    position: relative;
+    text-align: left;
+    font-size: 20px;
+    visibility: hidden;
+}
+
+#howtoplay:hover #instruction{
+    visibility: visible;
+    max-width: 200px;
+    opacity: 1;
+}
+
+#beatrixText{
     position: absolute;
     text-align: right;
-    max-width: 150em;
     font-size: 20px;
     bottom: 0;
     right: 0;
+    animation: bounce;
+    animation-duration: 4s;
 }
 
 /* Settings for All Cards */
@@ -188,7 +205,8 @@ button{
 }
 
 
-
+/* MOBILE */
+/*
 @media screen and (max-width: 600px) {
     body {
         max-width: 600px;
@@ -205,8 +223,14 @@ button{
         cursor: pointer;
         font-family: 'Abel', sans-serif;
     }
-  }
 
-  /* #cpuHands {
-    display: hide;
+    #cpuHands {
+        display: none;
+    }
+
+
+    .placeHolder{
+        display: none;
+    }
+
 } */

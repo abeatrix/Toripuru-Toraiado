@@ -6,6 +6,7 @@
     <title>Toripuru Toraiado by Beatrix Woo</title>
     <link rel="stylesheet" href="./styles/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.compat.css" />
     <script src="./scripts/cards.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="./scripts/game.js" defer></script>
@@ -48,7 +49,9 @@
     </section>
     <section class="gameBoard gbROW1">
         <div class="card row3 placeHolder" id="howtoplay">
-            <div class="numColumn" id="topNumstart">HOW TO PLAY</div>
+            <div id="howtoplaytext">HOW TO PLAY<span id="instruction">: Capture the other card by having a bigger number on the sides where the numbers touch!</br>Win by having the most cards on board!</li>
+                    </span>
+            </div>
         </div>
         <div class="card row3 placeHolder">
             <div class="numColumn" id="topNum"></div>
@@ -133,7 +136,7 @@
             <div class="numColumn" id="botNum"></div>
         </div>
         <div class="card row3 placeHolder" id="beatrix">
-            <div class="numColumn" id="botNumBee">a game by Beatrix Woo</div>
+            <div class="numColumn" id="beatrixText">a game by Beatrix Woo</div>
         </div>
     </section>
     <section class="playerHands">
