@@ -10,6 +10,7 @@ body {
     text-align: center;
     font-family: 'Abel', sans-serif;
     max-width: 1300px;
+    min-width: 1300px;
     margin: 30px auto;
   }
 
@@ -57,6 +58,7 @@ h1 {
 
 .card#click2Start{
     background: beige;
+    place-content: center;
 }
 
 #click2Start #topNum{

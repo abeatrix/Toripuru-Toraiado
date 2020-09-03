@@ -144,8 +144,7 @@ class Player {
 					console.log(y);
 					if(x == (y+3)){ 																				               	 // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
-							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
-							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
 							pTemp.push(p2[j]);
 							p2.splice(j,1);
 							this.compareCheck = 1;
@@ -156,8 +155,7 @@ class Player {
 						}
 					} else if(x == (y-3)){ 																		          			 // see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
-							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
-							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
 							pTemp.push(p2[j]);
 							p2.splice(j,1);
 							this.compareCheck = 1;
@@ -168,8 +166,7 @@ class Player {
 						}
 					} else if(x == (y+1) && (x % 3 != 0)){																			// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
-							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
-							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
 							pTemp.push(p2[j]);
 							p2.splice(j,1);
 							this.compareCheck = 1;
@@ -180,8 +177,7 @@ class Player {
 						}
 					} else if(x == (y-1) && (x % 3 != 2)){																			// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
-							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
-							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
+							$(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1500, `swing`)
 							pTemp.push(p2[j]);
 							p2.splice(j,1);
 							this.compareCheck = 1;
@@ -271,11 +267,13 @@ class Game {
 
 	clickBoardRegister(){ 																											// create cilck listener for every tile on board
 		for(let i in gameBoard){
-			$(`.gameBoard #cardBoard${i}`).on("click", function(){
-				player1.boardChoice = i;
-				console.log(`click board choice ${player1.boardChoice}`);
-				console.log(`Player picked card to place in ${player1.boardChoice}`)
-			})
+			if(gameBoard.length > 0){
+				$(`.gameBoard #cardBoard${i}`).on("click", function(){
+					player1.boardChoice = i;
+					console.log(`click board choice ${player1.boardChoice}`);
+					console.log(`Player picked card to place in ${player1.boardChoice}`)
+				})
+			}
 		}
 	}
 
