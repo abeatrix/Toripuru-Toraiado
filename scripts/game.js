@@ -70,6 +70,7 @@ class Player {
 						}
 					}
 					console.log(`checking pushing problem`);
+					console.log(typeof(this.boardChoice));
 					if(typeof(this.boardChoice) != `NaN`){
 						this.onBoard.push(this.boardChoice);
 					}																											// add card to the array that store what cards players have on board
@@ -210,6 +211,7 @@ class Player {
 			else if (p1.length >0 && p2.length ==0) {
 				this.compareCheck = 1;
 				console.log(`there is no match at beginning`);
+				console.log(`player1.onBoard ${player1.onBoard} check what got pushed`)
 			} else {
 				this.compareCheck = 1;
 				console.log(`does this work 5`)
@@ -221,7 +223,10 @@ class Player {
 				for(let i in pTemp){
 					console.log(`${pTemp[i]}.currently adding to ${this.name}'s onBoard.length`);
 					console.log(`${this.onBoard.length} is ${this.name}'s onBoard.length`);
-					this.onBoard.push(pTemp[i]);																									// add whats in the temporary array to the actual one after cards capturing has been completed.
+					if(typeof(i) != `NaN`) {																				// add card to the array that store what cards players have on board
+						this.onBoard.push(pTemp[i]);
+					}
+					//this.onBoard.push(pTemp[i]);																									// add whats in the temporary array to the actual one after cards capturing has been completed.
 				}
 				for(let i = iTemp.length -1 ; i >= 0; --i){
 					console.log(`${iTemp.length} iTemp length`);
@@ -231,6 +236,7 @@ class Player {
 			}
 			pTemp = [];
 			iTemp = [];
+			console.log(`player1.onBoard ${player1.onBoard}`)
 		}
 	}
 
@@ -353,4 +359,5 @@ $("#click2Start").on("click", function(){
 	game.gameStart();
 	$("#click2Start").remove();
 	$(".placeHolder").remove();
+	swal("TO PLACE YOUE CARD ON THE BOARD", "Pick a square on the board before clicking on a card in your hands!", "info");
 });
