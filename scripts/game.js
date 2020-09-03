@@ -50,7 +50,7 @@ class Player {
 	}
 
 	playaCard(){ 																												// When user click on the board then card in hard, the card will show up on their board, and remove it from their hands
-		if(this.readyCheck == 0 && this.compareCheck == 0){
+		if(this.readyCheck == 0 && this.compareCheck == 0 & gameBoard.length !== 0){
 			if(this.handsChoice != null){
 				let i = parseInt(this.handsChoice); 																			// where user click from hands
 				let y = parseInt(this.boardChoice); 																			// the position of the board the user selected
@@ -61,10 +61,9 @@ class Player {
 				$(`#cardBoard${y} #leftNum`).text(`${z.left}`);
 				$(`#cardBoard${y} #botNum`).text(`${z.bottom}`);
 				$(`#cardBoard${y} #rightNum`).text(`${z.right}`);
-				$(`#cardBoard${y}`).unbind();																					// make selected tile not clickable anymore
-				if(this.boardChoice!=null){
+				if(this.boardChoice!=null & gameBoard.length !== 0){
 					for(let i in gameBoard){																					// to locate where the card player placed in gameBoard
-						if(gameBoard[i]==y){
+						if(gameBoard[i]==y & gameBoard.length !== 0){
 							gameBoard.splice(i,1);																				// remove position from gameBoard
 							this.choice = i; 																					// the index of the card that the player currently selected
 							$(`#PlayerCard${parseInt(this.handsChoice)}`).remove(); 											// remove card from Hands in front-end
@@ -77,12 +76,15 @@ class Player {
 					this.compareCards(player2);
 					if(this.compareCheck == 1){
 						this.readyCheck = 1;
+						$(`#cardBoard${y}`).unbind();																			// make selected tile not clickable anymore
 					}
 				}
 			}
 			if(player2.hands.length === 5 && player2.handsCounter.length === 0){
 				player2.handsCounter = player2.hands.slice();
 			}
+		} else if (gameBoard.length == 0){
+			this.gameOver();
 		}
 		player2.aiPicks();
 	}
@@ -138,7 +140,9 @@ class Player {
 			if(p1.length >0 && p2.length >0){
 				for(let j in p2){
 					let y = parseInt(p2[j]);
-					if(x == (y+3)){ 																				                // see if current picked card is on top of p2 card
+					console.log(`just checking`);
+					console.log(y);
+					if(x == (y+3)){ 																				               	 // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -150,7 +154,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (y-3)){ 																		           // see if p1 card is below of p2 card
+					} else if(x == (y-3)){ 																		          			 // see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`);
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -162,7 +166,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (y+1) && (x % 3 != 0)){															// see if p1 card is one the right of p2 card
+					} else if(x == (y+1) && (x % 3 != 0)){																			// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -174,7 +178,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`there is no match`);
 						}
-					} else if(x == (y-1) && (x % 3 != 2)){															// see if p1 card is on the left of p2 card
+					} else if(x == (y-1) && (x % 3 != 2)){																			// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
 							$(`#cardBoard${y}`).removeClass(`${target.name}Card`)
 							$(`#cardBoard${y}`).addClass(`${this.name}Card`);
@@ -201,16 +205,15 @@ class Player {
 			}
 		}
 		if(this.compareCheck == 1 && gameBoard.length != 0){
-			if(pTemp.length > 0){
-				console.log(pTemp)																				// add whats in the temporary array to the actual one after cards capturing has been completed.
-				this.onBoard.push(pTemp[0]);
+			if(pTemp.length > 0 & gameBoard.length !== 0){
+				this.onBoard.push(pTemp[0]);																						// add whats in the temporary array to the actual one after cards capturing has been completed.
 			}
 			pTemp = [];
 			console.log(pTemp)
 		}
 	}
 
-	resetRound(){																												// reset all decisions made
+	resetRound(){																													// reset all decisions made
 		player1.handsChoice = null;
 		player2.handsChoice = null;
 		player1.boardChoice = null;
@@ -244,9 +247,9 @@ class Player {
 
 class Game {
     constructor(player1, player2) {
-      this.player1 = player1;            																						// register player 1
+      this.player1 = player1;            																							// register player 1
 	  this.player2 = player2;
-	  this.totalBoard = 0;           																							// register player 2
+	  this.totalBoard = 0;           																								// register player 2
     }
 
 	gameStart(){
@@ -266,18 +269,17 @@ class Game {
 	}
 
 
-	clickBoardRegister(){ 																										// create cilck listener for every tile on board
+	clickBoardRegister(){ 																											// create cilck listener for every tile on board
 		for(let i in gameBoard){
 			$(`.gameBoard #cardBoard${i}`).on("click", function(){
 				player1.boardChoice = i;
 				console.log(`click board choice ${player1.boardChoice}`);
 				console.log(`Player picked card to place in ${player1.boardChoice}`)
-				$(`.gameBoard #cardBoard${i}`).unbind();
 			})
 		}
 	}
 
-	clickHandsRegister(){ 																										// create cilck listener for every card in hands
+	clickHandsRegister(){ 																											// create cilck listener for every card in hands
 		for(let i in player1.hands){
 			$(`.playerHands #PlayerCard${i}`).on("click", function(){
 				player1.handsChoice = i;
@@ -291,7 +293,7 @@ class Game {
 		}
 	}
 
-	makeMoreCards(){
+	makeMoreCards(){ 																												// generate more random cards
 		let newCard = [];
 
 		for(let i=0; i < 20; i++){
