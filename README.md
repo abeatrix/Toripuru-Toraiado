@@ -5,10 +5,8 @@
 ## -Wire frames
 <br/><a href="https://ibb.co/99V2J4d"><img src="https://i.ibb.co/nsnfT1K/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a>
 <br/><a href="https://www.pixiv.net/en/artworks/66766348"><img src="https://i.ibb.co/CWvFgXY/gamedesign-2.jpg" alt="gamedesign-2" border="0"></a>
-Color Used: </br>
-- ![#FFEDED](https://via.placeholder.com/15/FFEDED/000000?text=+) `#FFEDED`
-- ![#E6F0FF](https://via.placeholder.com/15/E6F0FF/000000?text=+) `#E6F0FF`
-- ![#dff0e3](https://via.placeholder.com/15/dff0e3/000000?text=+) `#dff0e3`
+</br> Color Used: </br>
+Red Side - ![#FFEDED](https://via.placeholder.com/15/FFEDED/000000?text=+) `#FFEDED` Blue Side - ![#E6F0FF](https://via.placeholder.com/15/E6F0FF/000000?text=+) `#E6F0FF` Board- ![#dff0e3](https://via.placeholder.com/15/dff0e3/000000?text=+) `#dff0e3`
 
 ## -User Stories
 <br/>Toripuru-Toraiado is the Japanese pronucation of " Triple Triad".
@@ -47,6 +45,7 @@ By deadline, the game will be:
 <br/><b>Instruction Art is from 萩酢 on pixiv:</b>
 
 ## -Updates
+- 9/4/2020  Added new rule - Plus rule - not deployed
 - 9/3/2020  Added visual effect and worked on front page of the game.
 - 9/2/2020  Added function to generate more cards.
 - 9/1/2020  Base game completed. Will add more rules and cards to the game in the next few days. Would like to add visual effect in the near future.
