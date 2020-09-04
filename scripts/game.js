@@ -148,6 +148,7 @@ class Player {
 							iTemp.push(j);
 							this.compareCheck = 1;
 							console.log(`the top number is greater than their bot number!`);
+							// new rule
 						} else {
 							this.compareCheck = 1;
 							console.log(`your number is not greater than your opponent's`);
