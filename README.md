@@ -27,11 +27,9 @@ By deadline, the game will be:
 * card will be captured by the one who has the greater number on the card on the size that touches
 
 ## -Instruction
-<br/><a href="https://www.pixiv.net/en/artworks/65060132"><img src="https://i.ibb.co/1MgQcc8/Frontof-Card.jpg" alt="Frontof-Card" border="0"></a>
-<br/><a href="https://www.pixiv.net/en/artworks/65060132"><img src="https://i.ibb.co/C5mn1Hn/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a>
-<br/><a href="https://www.pixiv.net/en/artworks/65060132"><img src="https://i.ibb.co/w0PH7DK/Battle-Points-2.jpg" alt="Battle-Points-2" border="0"></a>
-<br/><a href="https://www.pixiv.net/en/artworks/65060132"><img src="https://i.ibb.co/kHJvx8N/howtocapture.jpg" alt="howtocapture" border="0"></a>
-<br/><a href="https://www.pixiv.net/en/artworks/65060132"><img src="https://i.ibb.co/p08x5Ms/howtowin.jpg" alt="howtowin" border="0"></a>
+<br/><img src="https://i.ibb.co/kyT2w41/cards.jpg" alt="cards" border="0">
+<br/><img src="https://i.ibb.co/NSCn5hr/capturemechanic.jpg" alt="capturemechanic" border="0">
+<br/><img src="https://i.ibb.co/wRHRFPF/endgame.png" alt="endgame" border="0">
 
 ## -Stretch Goals
 1. Same rule - If your card matches the numbers on two or more cards on each side you will capture those cards (9/3 completed)
@@ -41,8 +39,14 @@ By deadline, the game will be:
 1. Add player 2 (9/3)
 1. mobile friendly (9/3)
 
-## -Credit
-<br/><b>Instruction Art is from 萩酢 on pixiv:</b>
+## -Languages and Libraries used
+<br/>HTML&CSS
+<br/>JavaScript
+<br/>jQuery
+<br/>jQuery UI
+<br/>animate.css
+<br/>Sweet Alert
+<br/>Google Font - Abel
 
 ## -Updates
 - 9/4/2020  Added new rule - Plus rule - not deployed
