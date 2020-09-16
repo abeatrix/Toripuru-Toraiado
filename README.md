@@ -1,11 +1,11 @@
-<a href="https://www.pixiv.net/en/artworks/83941944"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a><br/>
+<a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a><br/>
 # -Toripuru-Toraiado
-<br/>A tribute to the mini game from FF14 Triple Triad built in pure CSS and Javascrip with no images.
+<br/>A tribute to the mini game from FF14 Triple Triad built in pure CSS and Javascrip with no images.<br>
 <a href="https://abeatrix.github.io/-Toripuru-Toraiado/">Click Here to Play!</a>
 
 ## -Wire frames
 <br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/nsnfT1K/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a>
-<br/><a href="https://www.pixiv.net/en/artworks/66766348"><img src="https://i.ibb.co/CWvFgXY/gamedesign-2.jpg" alt="gamedesign-2" border="0"></a>
+<br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/CWvFgXY/gamedesign-2.jpg" alt="gamedesign-2" border="0"></a>
 </br> Color Used: </br>
 Red Side - ![#FFEDED](https://via.placeholder.com/15/FFEDED/000000?text=+) `#FFEDED` Blue Side - ![#E6F0FF](https://via.placeholder.com/15/E6F0FF/000000?text=+) `#E6F0FF` Board- ![#dff0e3](https://via.placeholder.com/15/dff0e3/000000?text=+) `#dff0e3`
 
@@ -42,7 +42,6 @@ By deadline, the game will be:
 1. mobile friendly (9/3)
 
 ## -Credit
-<br/><b>Back of the card design is from 隔断 on pixiv:</b>
 <br/><b>Instruction Art is from 萩酢 on pixiv:</b>
 
 ## -Updates
