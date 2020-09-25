@@ -1,7 +1,7 @@
-<a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a><br/>
+<a href="https://abeatrix.github.io/Toripuru-Toraiado/"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a><br/>
 # -Toripuru-Toraiado
 <br/>A tribute to the mini game from FF14 Triple Triad built in pure CSS and Javascrip with no images.<br>
-<a href="https://abeatrix.github.io/-Toripuru-Toraiado/">Click Here to Play!</a>
+<a href="https://abeatrix.github.io/Toripuru-Toraiado/">Click Here to Play!</a>
 
 ## -Wire frames
 <br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/nsnfT1K/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a>
