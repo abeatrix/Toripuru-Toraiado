@@ -1,11 +1,13 @@
-<a href="https://abeatrix.github.io/Toripuru-Toraiado/"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a><br/>
+<a href="https://abeatrix.github.io/Toripuru-Toraiado/"><img src="https://i.ibb.co/dP0Cr7b/Web-1920-1.jpg" alt="Web-1920-1" border="0" width="100%"></a><br/>
 # -Toripuru-Toraiado
 <br/>A tribute to the mini game from FF14 Triple Triad built in pure CSS and Javascrip with no images.<br>
 <a href="https://abeatrix.github.io/Toripuru-Toraiado/">Click Here to Play!</a>
+<img src="https://i.ibb.co/nsyTBtK/image.png" alt="image" border="0" width="100%">
+<img src="https://i.ibb.co/tYh1g8t/image.png" alt="image" border="0" width="100%">
 
 ## -Wire frames
-<br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/nsnfT1K/Web-1920-1.jpg" alt="Web-1920-1" border="0"></a>
-<br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/CWvFgXY/gamedesign-2.jpg" alt="gamedesign-2" border="0"></a>
+<br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/nsnfT1K/Web-1920-1.jpg" alt="Web-1920-1" border="0" width="100%"></a>
+<br/><a href="https://abeatrix.github.io/-Toripuru-Toraiado/"><img src="https://i.ibb.co/CWvFgXY/gamedesign-2.jpg" alt="gamedesign-2" border="0" width="100%"></a>
 </br> Color Used: </br>
 Red Side - ![#FFEDED](https://via.placeholder.com/15/FFEDED/000000?text=+) `#FFEDED` Blue Side - ![#E6F0FF](https://via.placeholder.com/15/E6F0FF/000000?text=+) `#E6F0FF` Board- ![#dff0e3](https://via.placeholder.com/15/dff0e3/000000?text=+) `#dff0e3`
 
@@ -27,9 +29,9 @@ By deadline, the game will be:
 * card will be captured by the one who has the greater number on the card on the size that touches
 
 ## -Instruction
-<br/><img src="https://i.ibb.co/kyT2w41/cards.jpg" alt="cards" border="0">
-<br/><img src="https://i.ibb.co/NSCn5hr/capturemechanic.jpg" alt="capturemechanic" border="0">
-<br/><img src="https://i.ibb.co/wRHRFPF/endgame.png" alt="endgame" border="0">
+<br/><img src="https://i.ibb.co/kyT2w41/cards.jpg" alt="cards" border="0" width="100%">
+<br/><img src="https://i.ibb.co/NSCn5hr/capturemechanic.jpg" alt="capturemechanic" border="0" width="100%">
+<br/><img src="https://i.ibb.co/wRHRFPF/endgame.png" alt="endgame" border="0" width="100%">
 
 ## -Stretch Goals
 1. Same rule - If your card matches the numbers on two or more cards on each side you will capture those cards (9/3 completed)
