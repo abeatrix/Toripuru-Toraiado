@@ -18,30 +18,30 @@ class Player {
     constructor(name){
 	  this.name = name;
 	  this.deck = [];
-	  this.hands = [];																											// cards the players start with
-	  this.handsCounter = [];																									// keep track of the cards left in hands
-	  this.handsChoice = null;																									// the card from hand that the player has CLICKED
-      this.boardChoice = null; 																									// the position on board that the player has CLICKED
-	  this.choice = null; 																										// the index of the card that the player currently selected
-	  this.onBoard = []; 																										// player's cards' positions on board
-	  this.readyCheck = 0; 																										// ready check
-	  this.compareCheck = 0;																									// check if the cards have been compared this round
+	  this.hands = [];																																// cards the players start with
+	  this.handsCounter = [];																														// keep track of the cards left in hands
+	  this.handsChoice = null;																														// the card from hand that the player has CLICKED
+      this.boardChoice = null; 																														// the position on board that the player has CLICKED
+	  this.choice = null; 																															// the index of the card that the player currently selected
+	  this.onBoard = []; 																															// player's cards' positions on board
+	  this.readyCheck = 0; 																															// ready check
+	  this.compareCheck = 0;																														// check if the cards have been compared this round
     }
 
     generateDeck(){
         allCards.forEach((playcard) => {
         const card = new Card(playcard.name, playcard.top, playcard.right, playcard.bottom, playcard.left, playcard.img);
-		this.deck.push(card); 																									// add newly created cards to deck
+		this.deck.push(card); 																														// add newly created cards to deck
 		});
-		this.deck.sort(() => Math.random() - 0.5); 																				//shuffle deck before players draw from them to make sure that they will always be different
+		this.deck.sort(() => Math.random() - 0.5); 																									//shuffle deck before players draw from them to make sure that they will always be different
 	}
 
-	drawCard() { 																 												// draw card until cards in hands reach 5
+	drawCard() { 																 																	// draw card until cards in hands reach 5
 		while(this.hands.length < 5){
 			this.hands.push(this.deck[0]);
 			this.deck.splice(0,1);
 		};
-		for(let i in this.hands){																								// add cards to hands in front-end
+		for(let i in this.hands){																													// add cards to hands in front-end
 			$(`#${this.name}Card${i} #topNum`).text(`${this.hands[i].top}`);
 			$(`#${this.name}Card${i} #leftNum`).text(`${this.hands[i].left}`);
 			$(`#${this.name}Card${i} #botNum`).text(`${this.hands[i].bottom}`);
@@ -49,35 +49,35 @@ class Player {
 		};
 	}
 
-	playaCard(){ 																												// When user click on the board then card in hard, the card will show up on their board, and remove it from their hands
+	playaCard(){ 																																	// When user click on the board then card in hard, the card will show up on their board, and remove it from their hands
 		if(this.readyCheck == 0 && this.compareCheck == 0){
 			if(this.handsChoice != null && this.boardChoice != null){
-				let i = parseInt(this.handsChoice); 																			// where user click from hands
-				let y = parseInt(this.boardChoice); 																			// the position of the board the user selected
-				this.boardChoice = y;																							// add the user choice to the variable boardChoice for compareCard function
-				let z = this.hands[i]; 																							// this is the card that the player picked from their hands
+				let i = parseInt(this.handsChoice); 																								// where user click from hands
+				let y = parseInt(this.boardChoice); 																								// the position of the board the user selected
+				this.boardChoice = y;																												// add the user choice to the variable boardChoice for compareCard function
+				let z = this.hands[i]; 																												// this is the card that the player picked from their hands
 				$(`#cardBoard${y}`).addClass(`${this.name}Card`, 1000, `linear`)
 				$(`#cardBoard${y} #topNum`).text(`${z.top}`);
 				$(`#cardBoard${y} #leftNum`).text(`${z.left}`);
 				$(`#cardBoard${y} #botNum`).text(`${z.bottom}`);
 				$(`#cardBoard${y} #rightNum`).text(`${z.right}`);
 				if(this.boardChoice!=null ){
-					for(let i in gameBoard){																					// to locate where the card player placed in gameBoard
+					for(let i in gameBoard){																										// to locate where the card player placed in gameBoard
 						if(gameBoard[i]==y & gameBoard.length !== 0){
-							gameBoard.splice(i,1);																				// remove position from gameBoard
-							this.choice = i; 																					// the index of the card that the player currently selected
-							$(`#PlayerCard${parseInt(this.handsChoice)}`).remove(); 											// remove card from Hands in front-end
+							gameBoard.splice(i,1);																									// remove position from gameBoard
+							this.choice = i; 																										// the index of the card that the player currently selected
+							$(`#PlayerCard${parseInt(this.handsChoice)}`).remove(); 																// remove card from Hands in front-end
 						}
 					}
 					if(typeof(this.boardChoice) != `NaN`){
 						this.onBoard.push(this.boardChoice);
-					}																											// add card to the array that store what cards players have on board
+					}																																// add card to the array that store what cards players have on board
 				}
 				if($(`#cardBoard${y} #rightNum`).text() > 0 & this.choice != null){
 					this.compareCards(player2);
 					if(this.compareCheck == 1){
 						this.readyCheck = 1;
-						$(`#cardBoard${y}`).unbind();																			// make selected tile not clickable anymore
+						$(`#cardBoard${y}`).unbind();																								// make selected tile not clickable anymore
 					}
 				}
 			}
@@ -88,16 +88,16 @@ class Player {
 			this.compareCards(player2);
 			if(this.compareCheck == 1){
 				this.gameOver();
-				$(`#cardBoard${y}`).unbind();																					// make selected tile not clickable anymore
+				$(`#cardBoard${y}`).unbind();																										// make selected tile not clickable anymore
 			}
 		}
 	}
 
-	aiPicks(){ 																													// Function to let CPU pick a card randomly, and place it on the board randomly
+	aiPicks(){ 																																		// Function to let CPU pick a card randomly, and place it on the board randomly
 		if(player1.readyCheck == 1 && player1.compareCheck == 1 && gameBoard.length!=0){
-			let x = gameBoard[Math.floor(Math.random() *gameBoard.length)]; 													// computer randomly find a position on gameboard to place their cards
-			this.boardChoice = x; 																								// add the CPU choice to the variable boardChoice for compareCard function
-			const aiRandom = this.handsCounter[Math.floor(Math.random() *this.handsCounter.length)];							// computer randomly find a number for the index in hands to play
+			let x = gameBoard[Math.floor(Math.random() *gameBoard.length)]; 																		// computer randomly find a position on gameboard to place their cards
+			this.boardChoice = x; 																													// add the CPU choice to the variable boardChoice for compareCard function
+			const aiRandom = this.handsCounter[Math.floor(Math.random() *this.handsCounter.length)];												// computer randomly find a number for the index in hands to play
 			for(let i in this.hands){
 				if(this.hands[i].name === aiRandom.name){
 					this.choice = i;
@@ -108,20 +108,20 @@ class Player {
 					this.handsCounter.splice(i, 1);
 				}
 			}
-			$(`#cardBoard${x}`).addClass(`${this.name}Card`, 1000, `linear`);																	// add selected card from hands to board
+			$(`#cardBoard${x}`).addClass(`${this.name}Card`, 1000, `linear`);																		// add selected card from hands to board
 			$(`#cardBoard${x} #topNum`).text(`${aiRandom.top}`);
 			$(`#cardBoard${x} #leftNum`).text(`${aiRandom.left}`);
 			$(`#cardBoard${x} #botNum`).text(`${aiRandom.bottom}`);
 			$(`#cardBoard${x} #rightNum`).text(`${aiRandom.right}`);
-			$(`#cardBoard${x}`).unbind();																						// make selected tile not clickable anymore
-			this.onBoard.push(this.boardChoice);																				// add card to the array that store what cards players have on board
+			$(`#cardBoard${x}`).unbind();																											// make selected tile not clickable anymore
+			this.onBoard.push(this.boardChoice);																									// add card to the array that store what cards players have on board
 			for(let i in gameBoard){
 				if(gameBoard[i] == x){
-					gameBoard.splice(i,1);																						// remove position from gameBoard
+					gameBoard.splice(i,1);																											// remove position from gameBoard
 					this.readyCheck = 1;
 				}
 			}
-			$(`#CPUCard${this.choice}`).remove();																				// remove card on front end
+			$(`#CPUCard${this.choice}`).remove();																									// remove card on front end
 			if(player2.readyCheck == 1 && player1.readyCheck == 1){
 				setTimeout(this.compareCards(player1), 1000);
 				if(this.compareCheck == 1){
@@ -131,7 +131,7 @@ class Player {
 		}
 	}
 
-	compareCards(target){ 																											//compare cards at AI's turn + capture cards
+	compareCards(target){ 																															//compare cards at AI's turn + capture cards
 		let x = parseInt(this.boardChoice);
 		let p1 = this.onBoard;
 		let p2 = target.onBoard;
@@ -141,19 +141,22 @@ class Player {
 			if(p1.length >0 && p2.length >0){
 				for(let j in p2){
 					let y = parseInt(p2[j]);
-					if(x == (y+3)){ 																				               	 // see if current picked card is on top of p2 card
+					if(x == (y+3)){ 																				               					 // see if current picked card is on top of p2 card
 						if($(`#cardBoard${x} #topNum`).text() > $(`#cardBoard${y} #botNum`).text()){
 							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
 							iTemp.push(j);
 							this.compareCheck = 1;
 							console.log(`the top number is greater than their bot number!`);
-							// new rule
+							//new rule
+							//if( indexOf((y+2)) !== -1 && (y+2)%3 != 1 ){
+							//	if ($(`#cardBoard${x} #topNum`).text() + $(`#cardBoard${y} #botNum`).text()) === ($(`#cardBoard${x} #leftNum`).text() + $(`#cardBoard${y+2} #rightNum`).text()){}
+							//}
 						} else {
 							this.compareCheck = 1;
 							console.log(`your number is not greater than your opponent's`);
 						}
-					} else if(x == (y-3)){ 																		          			 // see if p1 card is below of p2 card
+					} else if(x == (y-3)){ 																		          							 // see if p1 card is below of p2 card
 						if($(`#cardBoard${x} #botNum`).text() > $(`#cardBoard${y} #topNum`).text()){
 							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
@@ -164,7 +167,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`your number is not greater than your opponent's`);
 						}
-					} else if(x == (y+1) && (x % 3 != 0)){																			// see if p1 card is one the right of p2 card
+					} else if(x == (y+1) && (x % 3 != 0)){																							// see if p1 card is one the right of p2 card
 						if($(`#cardBoard${x} #leftNum`).text() > $(`#cardBoard${y} #rightNum`).text()){
 							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
@@ -175,7 +178,7 @@ class Player {
 							this.compareCheck = 1;
 							console.log(`your number is not greater than your opponent's`);
 						}
-					} else if(x == (y-1) && (x % 3 != 2)){																			// see if p1 card is on the left of p2 card
+					} else if(x == (y-1) && (x % 3 != 2)){																							// see if p1 card is on the left of p2 card
 						if($(`#cardBoard${x} #rightNum`).text() > $(`#cardBoard${y} #leftNum`).text()){
 							($(`#cardBoard${y}`).switchClass(`${target.name}Card`, `${this.name}Card`, 1000, `swing`)).effect("bounce");
 							pTemp.push(p2[j]);
@@ -199,17 +202,17 @@ class Player {
 		}
 		if(this.compareCheck == 1){
 			if(pTemp.length > 0 && gameBoard.length >= 0){
-				for(let i in pTemp){																												// add cards that were captured to the array that store what cards players have on board
+				for(let i in pTemp){																												// add cards that were captured to player's array that stores what cards players have on board
 					this.onBoard.push(pTemp[i]);																									// add whats in the temporary array to the actual one after cards capturing has been completed.
 					}
 				}
-				for(let i = iTemp.length -1 ; i >= 0; --i){
+				for(let i = iTemp.length -1 ; i >= 0; --i){																							// remove cards that are captured from the opponent's hands
 					p2.splice(parseInt(iTemp[i]),1)
 					this.compareCheck = 1;
 				}
 			}
-			pTemp = [];
-			iTemp = [];
+			pTemp = [];																																// Empty the arrays for next player's turn
+			iTemp = [];																																// Empty the arrays for next player's turn
 			for(let i = player1.onBoard.length -1 ; i >= 0; --i){
 				if(isNaN(player1.onBoard[i])){
 					player1.onBoard.splice(i,1);
@@ -218,7 +221,7 @@ class Player {
 		}
 
 
-	resetRound(){																																	// reset all decisions made
+	resetRound(){																																	// reset all decisions made this turn
 		player1.handsChoice = null;
 		player2.handsChoice = null;
 		player1.boardChoice = null;
@@ -340,5 +343,5 @@ $("#click2Start").on("click", function(){
 	game.gameStart();
 	$("#click2Start").remove();
 	$(".placeHolder").remove();
-	swal("TO PLACE YOUE CARD ON THE BOARD", "Pick a square on the board before clicking on a card in your hands!", "info");
+	swal("TO PLACE YOUE CARD ON THE BOARD", "Please pick a square on the board before clicking on a card in your hands!", "info");
 });
